@@ -5,9 +5,9 @@
   "installCommand": "echo 'No install'",
   "regions": ["iad1"],
   "functions": {
-    "api/commands.py": { "maxDuration": 30 },
-    "api/bot.py": { "maxDuration": 30 },
-    "api/status.py": { "maxDuration": 30 }
+    "api/commands.py": { "runtime": "python3.11", "maxDuration": 30 },
+    "api/bot.py": { "runtime": "python3.11", "maxDuration": 30 },
+    "api/status.py": { "runtime": "python3.11", "maxDuration": 30 }
   },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
