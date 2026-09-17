@@ -1,15 +1,11 @@
 import json
 import os
 from datetime import datetime
-from http.server import BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 os.makedirs(DATA_DIR, exist_ok=True)
 
 COMMANDS_FILE = os.path.join(DATA_DIR, 'commands.json')
-BOT_STATS_FILE = os.path.join(DATA_DIR, 'bot_stats.json')
-BOT_STATUS_FILE = os.path.join(DATA_DIR, 'bot_status.json')
 
 
 def load_json(filepath, default=None):
@@ -24,57 +20,58 @@ def save_json(filepath, data):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
-def cors_headers():
-    return {
+def handler(request):
+    """Vercel Python serverless function handler."""
+    method = request.method
+    headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         'Content-Type': 'application/json'
     }
-
-
-class handler(BaseHTTPRequestHandler):
-    def do_OPTIONS(self):
-        self.send_response(200)
-        for k, v in cors_headers().items():
-            self.send_header(k, v)
-        self.end_headers()
-
-    def do_GET(self):
-        self.send_response(200)
-        for k, v in cors_headers().items():
-            self.send_header(k, v)
-        self.end_headers()
-        
+    
+    if method == 'OPTIONS':
+        return {
+            'statusCode': 200,
+            'headers': headers,
+            'body': ''
+        }
+    
+    if method == 'GET':
         data = load_json(COMMANDS_FILE, {'commands': [], 'updated_at': None})
-        self.wfile.write(json.dumps(data).encode())
-
-    def do_POST(self):
-        content_length = int(self.headers.get('Content-Length', 0))
-        post_data = self.rfile.read(content_length)
-        
+        return {
+            'statusCode': 200,
+            'headers': headers,
+            'body': json.dumps(data)
+        }
+    
+    if method == 'POST':
         try:
-            data = json.loads(post_data.decode('utf-8'))
-        except json.JSONDecodeError:
-            self.send_response(400)
-            for k, v in cors_headers().items():
-                self.send_header(k, v)
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': 'Invalid JSON'}).encode())
-            return
+            data = request.json
+        except Exception:
+            return {
+                'statusCode': 400,
+                'headers': headers,
+                'body': json.dumps({'error': 'Invalid JSON'})
+            }
         
         if not data:
-            self.send_response(400)
-            for k, v in cors_headers().items():
-                self.send_header(k, v)
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': 'No data provided'}).encode())
-            return
+            return {
+                'statusCode': 400,
+                'headers': headers,
+                'body': json.dumps({'error': 'No data provided'})
+            }
         
         save_json(COMMANDS_FILE, data)
         
-        self.send_response(200)
-        for k, v in cors_headers().items():
-            self.send_header(k, v)
-        self.end_headers()
-        self.wfile.write(json.dumps({'success': True, 'message': 'Commands updated'}).encode())
+        return {
+            'statusCode': 200,
+            'headers': headers,
+            'body': json.dumps({'success': True, 'message': 'Commands updated'})
+        }
+    
+    return {
+        'statusCode': 405,
+        'headers': headers,
+        'body': json.dumps({'error': 'Method not allowed'})
+    }

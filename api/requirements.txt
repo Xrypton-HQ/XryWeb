@@ -1,0 +1,2 @@
+# Vercel Python runtime - no additional dependencies needed
+# Uses stdlib only (json, os, datetime)
