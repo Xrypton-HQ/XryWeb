@@ -2,10 +2,14 @@ import json
 import os
 from datetime import datetime
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
-os.makedirs(DATA_DIR, exist_ok=True)
-
+# Use /tmp for writable storage on Vercel
+DATA_DIR = '/tmp/data'
 BOT_STATS_FILE = os.path.join(DATA_DIR, 'bot_stats.json')
+
+
+def ensure_data_dir():
+    """Create data directory if it doesn't exist (called at runtime)."""
+    os.makedirs(DATA_DIR, exist_ok=True)
 
 
 def load_json(filepath, default=None):
@@ -22,6 +26,9 @@ def save_json(filepath, data):
 
 def handler(request):
     """Vercel Python serverless function handler."""
+    # Ensure data directory exists at runtime
+    ensure_data_dir()
+    
     method = request.method
     headers = {
         'Access-Control-Allow-Origin': '*',
