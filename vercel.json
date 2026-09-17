@@ -23,5 +23,11 @@
         { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/commands", "destination": "/commands.html" },
+    { "source": "/bot", "destination": "/bot.html" },
+    { "source": "/status", "destination": "/status.html" }
   ]
 }
