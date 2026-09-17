@@ -4,37 +4,22 @@
   "devCommand": "echo 'No dev server'",
   "installCommand": "echo 'No install'",
   "regions": ["iad1"],
-"functions": {
-    "api/*.py": {
-      "maxDuration": 30
-    }
+  "functions": {
+    "api/commands.py": { "maxDuration": 30 },
+    "api/bot.py": { "maxDuration": 30 },
+    "api/status.py": { "maxDuration": 30 }
   },
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/$1" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
   ]
