@@ -1,2 +1,0 @@
-# Vercel Python serverless functions - no additional dependencies needed
-# Uses stdlib only (json, os, datetime)
