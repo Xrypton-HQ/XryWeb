@@ -61,6 +61,9 @@
     for (var i = 0; i < sections.length; i++) {
       if (sections[i].getBoundingClientRect().top <= 120) current = sectionIds[i];
     }
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      current = sectionIds[sectionIds.length - 1];
+    }
     markActive(current);
   }
   onScroll();

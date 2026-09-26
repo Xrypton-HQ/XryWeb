@@ -74,7 +74,8 @@
     }
     requestAnimationFrame(frame);
   }
-  if (counters.length && 'IntersectionObserver' in window) {
+  function initCounters() {
+    if (!counters.length || !('IntersectionObserver' in window)) return;
     var countObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -86,6 +87,31 @@
     counters.forEach(function (el) { countObserver.observe(el); });
   }
 
+  function applyInfo(info) {
+    var users = document.querySelector('[data-count-key="users"]');
+    var guilds = document.querySelector('[data-count-key="guilds"]');
+    if (users && Number.isFinite(info.users)) {
+      users.setAttribute('data-count', String(Math.round(info.users)));
+      users.textContent = Math.round(info.users).toLocaleString();
+    }
+    if (guilds && Number.isFinite(info.guilds)) {
+      guilds.setAttribute('data-count', String(Math.round(info.guilds)));
+      guilds.textContent = Math.round(info.guilds).toLocaleString();
+    }
+  }
+
+  var infoFetch = fetch('/info', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; });
+  var infoTimeout = new Promise(function (resolve) {
+    setTimeout(function () { resolve(null); }, 1200);
+  });
+
+  Promise.race([infoFetch, infoTimeout]).then(function (info) {
+    if (info) applyInfo(info);
+    initCounters();
+  });
+
   document.querySelectorAll('[data-marquee]').forEach(function (track) {
     Array.prototype.slice.call(track.children).forEach(function (node) {
       var clone = node.cloneNode(true);
@@ -93,6 +119,60 @@
       track.appendChild(clone);
     });
   });
+
+  var VERIFIED_BADGE = '<svg class="verified" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.2 14.4l-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6z"/></svg>';
+
+  function esc(text) {
+    return String(text).replace(/[&<>"]/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch];
+    });
+  }
+
+  function initials(name) {
+    var words = name.trim().split(/\s+/);
+    if (words.length >= 2 && words[1]) {
+      return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+    }
+    return name.replace(/[^a-z0-9]/gi, '').slice(0, 2).toUpperCase();
+  }
+
+  function renderGuilds(list) {
+    var track = document.querySelector('.marquee-track');
+    if (!track || !list.length) return;
+    var tints = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8'];
+    track.innerHTML = list.map(function (g, i) {
+      var inner = g.icon
+        ? '<img src="' + esc(g.icon) + '" alt="" loading="lazy">'
+        : esc(initials(g.name));
+      return '<div class="server">' +
+        '<span class="server-avatar ' + tints[i % tints.length] + '" aria-hidden="true">' + inner + '</span>' +
+        '<span class="server-meta"><span class="server-name">' + esc(g.name) +
+        (g.verified === false ? '' : VERIFIED_BADGE) +
+        '</span><span class="server-members">' + Number(g.members).toLocaleString() +
+        ' members</span></span></div>';
+    }).join('');
+    Array.prototype.slice.call(track.children).forEach(function (node) {
+      var clone = node.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+    Array.prototype.slice.call(track.querySelectorAll('.server-avatar img')).forEach(function (img) {
+      function toInitials() {
+        var card = img.closest('.server');
+        var nameEl = card && card.querySelector('.server-name');
+        if (img.parentElement) img.parentElement.textContent = initials(nameEl ? nameEl.textContent : '');
+      }
+      img.addEventListener('error', toInitials);
+      if (img.complete && img.naturalWidth === 0) toInitials();
+    });
+  }
+
+  fetch('/guilds', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (data && Array.isArray(data.guilds)) renderGuilds(data.guilds);
+    })
+    .catch(function () {});
 
   var canvas = document.getElementById('particles');
   if (canvas && canvas.getContext) {

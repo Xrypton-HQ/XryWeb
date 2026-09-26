@@ -1,5 +1,7 @@
 {
   "rewrites": [
-    { "source": "/commands", "destination": "/api/commands" }
+    { "source": "/commands", "destination": "/api/commands" },
+    { "source": "/info", "destination": "/api/info" },
+    { "source": "/guilds", "destination": "/api/guilds" }
   ]
 }
