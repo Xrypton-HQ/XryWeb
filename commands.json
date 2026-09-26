@@ -1,202 +1,2186 @@
 {
   "commands": [
     {
-      "name": "ban",
-      "usage_count": 0,
-      "category": "moderation",
-      "description": "Removes a member from the server and prevents them from rejoining until they're unbanned.",
-      "arguments": [
-        { "name": "user", "description": "The member to ban.", "required": true },
-        { "name": "reason", "description": "Reason for the ban, shown in the audit log and the DM sent to the user.", "required": false },
-        { "name": "delete_messages", "description": "How many days of that user's recent messages to delete (0-7).", "required": false }
-      ],
-      "permissions": ["Ban Members"]
-    },
-    {
-      "name": "kick",
-      "usage_count": 0,
-      "category": "moderation",
-      "description": "Removes a member from the server. They can rejoin with a new invite.",
-      "arguments": [
-        { "name": "user", "description": "The member to kick.", "required": true },
-        { "name": "reason", "description": "Reason for the kick, shown in the audit log.", "required": false }
-      ],
-      "permissions": ["Kick Members"]
-    },
-    {
-      "name": "timeout",
-      "usage_count": 0,
-      "category": "moderation",
-      "description": "Temporarily removes a member's ability to send messages, add reactions, or join voice channels.",
-      "arguments": [
-        { "name": "user", "description": "The member to time out.", "required": true },
-        { "name": "duration", "description": "How long the timeout lasts (e.g. 10m, 1h, 1d). Max 28 days.", "required": true },
-        { "name": "reason", "description": "Reason for the timeout, shown in the audit log.", "required": false }
-      ],
-      "permissions": ["Moderate Members"]
-    },
-    {
-      "name": "purge",
-      "usage_count": 0,
-      "category": "moderation",
-      "description": "Bulk-deletes messages from the current channel, optionally filtered by member or bot.",
-      "arguments": [
-        { "name": "amount", "description": "How many messages to delete (1-100).", "required": true },
-        { "name": "user", "description": "Only delete messages from this member.", "required": false },
-        { "name": "bots_only", "description": "Only delete messages sent by bots.", "required": false }
-      ],
-      "permissions": ["Manage Messages"]
-    },
-    {
-      "name": "warn",
-      "usage_count": 0,
-      "category": "moderation",
-      "description": "Records a warning on a member's record, visible to moderators in the case log.",
-      "arguments": [
-        { "name": "user", "description": "The member to warn.", "required": true },
-        { "name": "reason", "description": "Reason for the warning.", "required": true }
-      ],
-      "permissions": ["Moderate Members"]
-    },
-    {
-      "name": "rank",
-      "usage_count": 0,
-      "category": "leveling",
-      "description": "Shows a member's current level, XP progress, and server rank.",
-      "arguments": [
-        { "name": "user", "description": "The member to check. Defaults to yourself.", "required": false }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "leaderboard",
-      "usage_count": 0,
-      "category": "leveling",
-      "description": "Displays the server's top members ranked by XP.",
-      "arguments": [
-        { "name": "page", "description": "Which page of the leaderboard to view.", "required": false }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "setlevel",
-      "usage_count": 0,
-      "category": "leveling",
-      "description": "Manually sets a member's level, overriding their current XP.",
-      "arguments": [
-        { "name": "user", "description": "The member whose level you're changing.", "required": true },
-        { "name": "level", "description": "The level to set them to.", "required": true }
-      ],
-      "permissions": ["Manage Server"]
-    },
-    {
-      "name": "poll",
-      "usage_count": 0,
-      "category": "utility",
-      "description": "Posts a reaction-based poll that members can vote on.",
-      "arguments": [
-        { "name": "question", "description": "The question being asked.", "required": true },
-        { "name": "options", "description": "A comma-separated list of up to 10 answer choices.", "required": true },
-        { "name": "duration", "description": "How long the poll stays open before results are posted.", "required": false }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "remind",
-      "usage_count": 0,
-      "category": "utility",
-      "description": "Sets a personal reminder that Hollow will DM you when it's time.",
-      "arguments": [
-        { "name": "time", "description": "When to be reminded (e.g. 20m, 3h, 2d).", "required": true },
-        { "name": "message", "description": "What to be reminded about.", "required": true }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "userinfo",
-      "usage_count": 0,
-      "category": "utility",
-      "description": "Looks up account details for a member: join date, account age, and roles.",
-      "arguments": [
-        { "name": "user", "description": "The member to look up. Defaults to yourself.", "required": false }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "ai",
-      "usage_count": 0,
-      "category": "utility",
-      "description": "Chats with Hollow's built-in AI assistant, right inside Discord.",
-      "arguments": [
-        { "name": "prompt", "description": "Your question or instruction for the assistant.", "required": true },
-        { "name": "model", "description": "Which model to use. Defaults to the fastest one.", "required": false }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "translate",
-      "usage_count": 0,
-      "category": "utility",
-      "description": "Translates a message into another language and posts it in the channel.",
-      "arguments": [
-        { "name": "text", "description": "The text to translate.", "required": true },
-        { "name": "language", "description": "Target language code (e.g. es, de, ja).", "required": true }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "reactionrole",
-      "usage_count": 0,
-      "category": "automation",
-      "description": "Attaches a self-assignable role to an emoji reaction on an existing message.",
-      "arguments": [
-        { "name": "message_id", "description": "The ID of the message to attach the reaction role to.", "required": true },
-        { "name": "emoji", "description": "The emoji members react with to get the role.", "required": true },
-        { "name": "role", "description": "The role to assign when that emoji is used.", "required": true }
-      ],
-      "permissions": ["Manage Roles"]
-    },
-    {
       "name": "autorole",
       "usage_count": 0,
       "category": "automation",
-      "description": "Automatically assigns a role to every new member when they join the server.",
-      "arguments": [
-        { "name": "role", "description": "The role to auto-assign on join.", "required": true },
-        { "name": "enabled", "description": "Turn auto-role on or off. Defaults to on.", "required": false }
-      ],
-      "permissions": ["Manage Roles"]
+      "description": "Manage roles that are automatically given to new members.",
+      "arguments": [],
+      "permissions": [
+        "Manage Roles"
+      ]
     },
     {
-      "name": "welcome",
+      "name": "autorole add",
       "usage_count": 0,
       "category": "automation",
-      "description": "Configures a welcome message posted automatically when a new member joins.",
+      "description": "Add a role to be given to every new member.",
       "arguments": [
-        { "name": "channel", "description": "The channel welcome messages should be posted in.", "required": true },
-        { "name": "message", "description": "Custom message text. Supports {user} and {server} placeholders.", "required": false }
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
       ],
-      "permissions": ["Manage Server"]
+      "permissions": []
     },
     {
-      "name": "customcommand",
+      "name": "autorole remove",
       "usage_count": 0,
       "category": "automation",
-      "description": "Creates your own command with a custom trigger and response.",
+      "description": "Remove a role from the everyone autorole list.",
       "arguments": [
-        { "name": "name", "description": "What members type to trigger the command.", "required": true },
-        { "name": "response", "description": "The reply Hollow sends. Supports variables like {user}.", "required": true },
-        { "name": "delete_trigger", "description": "Delete the member's message after responding.", "required": false }
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
       ],
-      "permissions": ["Manage Server"]
+      "permissions": []
     },
     {
-      "name": "8ball",
+      "name": "autorole list",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "List every role given to all new members.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autorole reset",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Clear every autorole assigned to everyone.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autorole humans",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Manage autoroles given only to human members.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autorole humans add",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Add a role to be given to human members only.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autorole humans remove",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Remove a role from the humans autorole list.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autorole humans list",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "List every role given to humans only.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autorole humans reset",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Clear every autorole assigned to humans only.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autorole bots",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Manage autoroles given only to bot members.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autorole bots add",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Add a role to be given to bot members only.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autorole bots remove",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Remove a role from the bots autorole list.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autorole bots list",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "List every role given to bots only.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autorole bots reset",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Clear every autorole assigned to bots only.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autoreact",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Automatically react when a trigger phrase is used.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "autoreact add",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Add a new autoreaction trigger.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autoreact remove",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Remove an autoreaction trigger.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autoreact edit",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Edit an existing autoreaction (change trigger or emoji).",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autoreact reset",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Clear every autoreaction configured in this server.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autoreact list",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "List every autoreaction trigger.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autoreact exclusive",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Make an autoreaction only fire for a specific channel or role.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "autoreact exclusive channel",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Make an autoreaction only fire in a specific channel.",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        },
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autoreact exclusive role",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Make an autoreaction only fire for members with a specific role.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        },
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "autoreact exclusive list",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Show configured exclusivity for every autoreaction.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "trigger",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Send an automatic reply when a phrase is detected.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "trigger add",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Create a new autoresponder trigger.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "respond",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trigger remove",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Delete an autoresponder trigger.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trigger list",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "List every autoresponder trigger.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "trigger reset",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Delete every autoresponder in this server.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "trigger rename",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Replace the response of an existing autoresponder.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "new_respond",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trigger exclusive",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Restrict an autoresponder to specific channels or roles.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "trigger exclusive channeladd",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Restrict a trigger to a specific channel.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trigger exclusive channelremove",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Remove a channel restriction from a trigger.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trigger exclusive channellist",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Show channel restrictions for every autoresponder.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "trigger exclusive roleadd",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Restrict a trigger to a specific role.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trigger exclusive roleremove",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Remove a role restriction from a trigger.",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trigger exclusive rolelist",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Show role restrictions for every autoresponder.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "prefix",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Manage server prefixes",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "prefix self",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Manage your personal prefix",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "prefix self add",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Add a personal prefix",
+      "arguments": [
+        {
+          "name": "prefix",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "prefix self remove",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Remove your personal prefix",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "prefix add",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Set the server prefix",
+      "arguments": [
+        {
+          "name": "prefix",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "prefix remove",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Remove the server prefix",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "prefix list",
+      "usage_count": 0,
+      "category": "config",
+      "description": "List the server prefix",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "bot",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Manage bot settings",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "bot emoji_approve",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Set the approve emoji for embeds",
+      "arguments": [
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "bot emoji_deny",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Set the deny emoji for embeds",
+      "arguments": [
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "bot color",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Change the bot's neutral colour",
+      "arguments": [
+        {
+          "name": "color",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "bot reset_emojis",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Reset the emoji configuration to the defaults",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "alias",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Manage command aliases",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "alias removeall",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Remove all aliases for a command",
+      "arguments": [
+        {
+          "name": "command_name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "alias remove",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Remove an alias for a command",
+      "arguments": [
+        {
+          "name": "shortcut",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "alias list",
+      "usage_count": 0,
+      "category": "config",
+      "description": "List every alias for all commands",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "alias add",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Create an alias for a command",
+      "arguments": [
+        {
+          "name": "shortcut",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "command_name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "alias view",
+      "usage_count": 0,
+      "category": "config",
+      "description": "View command execution for an alias",
+      "arguments": [
+        {
+          "name": "shortcut",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "help",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Get help for commands",
+      "arguments": [
+        {
+          "name": "query",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Manage button roles",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole add",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Create a buttonrole",
+      "arguments": [
+        {
+          "name": "message_link",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        },
+        {
+          "name": "button_style",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "label",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole list",
+      "usage_count": 0,
+      "category": "config",
+      "description": "List every buttonrole in the server",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole remove",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Remove a buttonrole from a message",
+      "arguments": [
+        {
+          "name": "message_link",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole edit",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Edit a buttonrole",
+      "arguments": [
+        {
+          "name": "message_link",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": false
+        },
+        {
+          "name": "button_style",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "label",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole limit",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Limit how many roles a user can take from a message",
+      "arguments": [
+        {
+          "name": "message_link",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "limit",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole styles",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Show all button styles",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "buttonrole reset",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Mass-remove all buttonroles from messages",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "embed",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Create and manage embeds",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "embed create",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Create an embed using the embed script feature",
+      "arguments": [
+        {
+          "name": "script",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "embed code",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Recreate a message's embed as an EmbedBuilder script",
+      "arguments": [
+        {
+          "name": "message_link",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "embed save",
+      "usage_count": 0,
+      "category": "config",
+      "description": "Save an embed for future use",
+      "arguments": [
+        {
+          "name": "script",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "embed view",
+      "usage_count": 0,
+      "category": "config",
+      "description": "View a saved embed",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "suggestions",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Manage server suggestions.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "suggestions setup",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Interactive setup wizard for the suggestions system.",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "suggestions panel",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Re-post the server's suggestion panel (binds the button again).",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "suggestions blacklist",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Blacklist a user from making suggestions.",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "suggestions unblacklist",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Remove a user from the suggestion blacklist.",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "invited",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "List the members invited by a specific user (paginated).",
+      "arguments": [
+        {
+          "name": "target",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "page",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "invites",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "View the invite statistics of a member.",
+      "arguments": [
+        {
+          "name": "target",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "inviter",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show who invited a given user.",
+      "arguments": [
+        {
+          "name": "target",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "level",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Server leveling system.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "level rank",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show your ranking in the server leaderboard.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "level up",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Preview what your level-up announcement would look like.",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "level add",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Give XP to a member (administrator).",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level remove",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Remove XP from a member (administrator).",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level leaderboard",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show the leveling leaderboard.",
+      "arguments": [
+        {
+          "name": "page",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "level exempt",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Exclude channels or roles from gaining XP.",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level unexempt",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Re-include a previously excluded channel or role.",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level settings",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "View the current leveling configuration.",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level message",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the level-up announcement template.",
+      "arguments": [
+        {
+          "name": "template",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level announce",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Toggle level-up announcements on or off.",
+      "arguments": [
+        {
+          "name": "state",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level toggle",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Enable or disable the leveling system.",
+      "arguments": [
+        {
+          "name": "state",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level rate",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the XP range per qualifying message.",
+      "arguments": [
+        {
+          "name": "minimum",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "maximum",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level cooldown",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the leveling cooldown (in seconds).",
+      "arguments": [
+        {
+          "name": "seconds",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level reward",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Award a role at a given level.",
+      "arguments": [
+        {
+          "name": "level_value",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "level unreward",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Remove a level reward for a given level.",
+      "arguments": [
+        {
+          "name": "level_value",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Manage server starboards.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "starboard config",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show every configured starboard in this server.",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard add",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Add a new starboard (max 3 per server).",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        },
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "threshold",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard remove",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Remove a starboard by name.",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard edit",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Interactively edit an existing starboard (channel/emoji/threshold/color).",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard self",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Toggle whether self-reactions count toward a starboard.",
+      "arguments": [
+        {
+          "name": "allow",
+          "description": "Yes or no",
+          "required": true
+        },
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard lock",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Lock a starboard, preventing new posts.",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard unlock",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Unlock a previously locked starboard.",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard ignore",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Ignore a channel, role or user from a starboard.",
+      "arguments": [
+        {
+          "name": "kind",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        },
+        {
+          "name": "role",
+          "description": "Role",
+          "required": false
+        },
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        },
+        {
+          "name": "name",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard unignore",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Un-ignore a channel, role or user from a starboard.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": false
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        },
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        },
+        {
+          "name": "name",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "starboard ignorelist",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show every channel, role and user ignored by a starboard.",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "giveaways",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Manage giveaways.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "giveaways start",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Start a new giveaway interactively (buttons collect the inputs).",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways list",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "List every giveaway in this guild (active, then historical).",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways cancel",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Cancel an active giveaway (no winners are picked).",
+      "arguments": [
+        {
+          "name": "message_id_or_link",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways end",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "End a giveaway early and pick winners.",
+      "arguments": [
+        {
+          "name": "message_id_or_link",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways create",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Create a giveaway directly: prize, winners, duration.",
+      "arguments": [
+        {
+          "name": "prize",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "winners",
+          "description": "Number",
+          "required": false
+        },
+        {
+          "name": "duration",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaway",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "End a giveaway early and pick winners (alias of giveaways end).",
+      "arguments": [
+        {
+          "name": "action",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "message_id_or_link",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways reroll",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Reroll the winners of an ended giveaway.",
+      "arguments": [
+        {
+          "name": "message_id_or_link",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways entires",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "View the entries of a giveaway (note: keeps the typo from the spec).",
+      "arguments": [
+        {
+          "name": "message_id_or_link",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways channel",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the default channel where giveaways will be posted.",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways extraentries",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show every role that grants extra giveaway entries.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways clear",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Clear ended giveaways from the database.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways edit",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Edit an active giveaway's configuration.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways edit prize",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Change the prize of an active giveaway.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "prize",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit winners",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Change how many winners an active giveaway will pick.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "winners",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit duration",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Change how long an active giveaway lasts.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "duration",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit stay",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the minimum server stay required to enter a giveaway (days).",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "days",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit age",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the minimum account age required to enter a giveaway (days).",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "days",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit host",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Transfer the host of an active giveaway to another member.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit extraentries",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the number of extra entries a role grants.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        },
+        {
+          "name": "entries",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "giveaways edit requiredroles",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Replace the list of roles required to enter a giveaway.",
+      "arguments": [
+        {
+          "name": "roles",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "giveaways edit messages",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Update the custom messages shown above/below the giveaway.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "text",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit thumbnail",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the small image shown on an active giveaway embed.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "url",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit image",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set the larger image shown on an active giveaway embed.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "url",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways edit colour",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Change the embed colour of an active giveaway.",
+      "arguments": [
+        {
+          "name": "message_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "colour",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways blacklist",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Manage the giveaway entry block-list.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "giveaways blacklist add",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Block a member from entering giveaways in this server.",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways blacklist remove",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Remove a user from the giveaway blacklist.",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "giveaways blacklist list",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show every user currently blacklisted from giveaways.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "afk",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Mark yourself as AFK (use without args to manage presets, etc.).",
+      "arguments": [
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "afkset",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "AFK administration (presets, ignored channels, etc.).",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "afkset preset",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Manage your personal AFK presets.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "afkset preset add",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Save an AFK preset you can re-use later.",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "status",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "afkset preset delete",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Delete one of your AFK presets.",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "afkset preset list",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show every AFK preset you've saved.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "afkset preset use",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Mark yourself as AFK using a saved preset.",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "afkset ignore",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Stop AFK from auto-clearing when a member speaks in this channel.",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "afkset unignore",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Re-enable AFK auto-clearing in a previously ignored channel.",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "afkset timeout",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set how long before an AFK user is auto-removed (e.g. 30m, 2h, 0 to disable).",
+      "arguments": [
+        {
+          "name": "minutes",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "afkset list",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Show every user that is currently AFK in this server.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "afkset logchannel",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Set where AFK notifications are posted.",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "afkset clear",
+      "usage_count": 0,
+      "category": "engagement",
+      "description": "Clear another member's AFK status.",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "ball",
       "usage_count": 0,
       "category": "fun",
-      "description": "Asks the magic 8-ball a question and returns a yes, no, or maybe.",
+      "description": "Ask the AI-powered 8ball a question",
       "arguments": [
-        { "name": "question", "description": "The question to ask the 8-ball.", "required": true }
+        {
+          "name": "question",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "dice",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Roll a dice",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "rps",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Play rock paper scissors",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "base64",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Base64 encoder/decoder commands",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "base64 encode",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Encode text to base64",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "base64 decode",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Decode base64 back to text",
+      "arguments": [
+        {
+          "name": "base64_string",
+          "description": "Text",
+          "required": true
+        }
       ],
       "permissions": []
     },
@@ -204,134 +2188,3472 @@
       "name": "coinflip",
       "usage_count": 0,
       "category": "fun",
-      "description": "Flips a coin and returns heads or tails.",
+      "description": "Flip a coin",
       "arguments": [],
       "permissions": []
     },
     {
-      "name": "roll",
+      "name": "steal",
       "usage_count": 0,
       "category": "fun",
-      "description": "Rolls dice and returns the total, e.g. 2d20 for two twenty-sided dice.",
+      "description": "Steal an emoji from another server",
       "arguments": [
-        { "name": "dice", "description": "Dice notation such as d20, 2d6, or 4d100. Defaults to d20.", "required": false }
+        {
+          "name": "emoji",
+          "description": "Text",
+          "required": false
+        }
       ],
       "permissions": []
     },
     {
-      "name": "trivia",
+      "name": "dick",
       "usage_count": 0,
       "category": "fun",
-      "description": "Starts a timed trivia round in the current channel with points for the winner.",
+      "description": "Check your dih size",
       "arguments": [
-        { "name": "category", "description": "Trivia category: general, gaming, music, or science.", "required": false },
-        { "name": "difficulty", "description": "Easy, medium, or hard. Defaults to medium.", "required": false }
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        }
       ],
       "permissions": []
     },
     {
-      "name": "meme",
+      "name": "image",
       "usage_count": 0,
       "category": "fun",
-      "description": "Posts a random meme from a curated, SFW collection.",
+      "description": "Search for an image",
       "arguments": [
-        { "name": "subreddit", "description": "Only pull memes from this community.", "required": false }
+        {
+          "name": "query",
+          "description": "Text",
+          "required": true
+        }
       ],
       "permissions": []
     },
     {
-      "name": "ship",
+      "name": "search",
       "usage_count": 0,
       "category": "fun",
-      "description": "Calculates a playful compatibility percentage between two members.",
+      "description": "Search the web",
       "arguments": [
-        { "name": "user", "description": "The first member.", "required": true },
-        { "name": "user2", "description": "The second member.", "required": true }
+        {
+          "name": "query",
+          "description": "Text",
+          "required": true
+        }
       ],
       "permissions": []
     },
     {
-      "name": "play",
+      "name": "humble",
       "usage_count": 0,
-      "category": "music",
-      "description": "Plays a song from YouTube or Spotify in your voice channel.",
+      "category": "fun",
+      "description": "AI-powered packgod style roast",
       "arguments": [
-        { "name": "query", "description": "A search term, or a direct YouTube/Spotify link.", "required": true }
+        {
+          "name": "roast",
+          "description": "Text",
+          "required": true
+        }
       ],
       "permissions": []
     },
     {
-      "name": "queue",
+      "name": "urban",
       "usage_count": 0,
-      "category": "music",
-      "description": "Shows the current play queue with durations and who requested each track.",
+      "category": "fun",
+      "description": "Search Urban Dictionary",
       "arguments": [
-        { "name": "page", "description": "Which page of the queue to view.", "required": false }
+        {
+          "name": "query",
+          "description": "Text",
+          "required": true
+        }
       ],
       "permissions": []
     },
     {
-      "name": "skip",
+      "name": "howgay",
       "usage_count": 0,
-      "category": "music",
-      "description": "Votes to skip the current track, or skips instantly with the DJ permission.",
+      "category": "fun",
+      "description": "How gay is someone?",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "dihr",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Check your real dih size",
       "arguments": [],
-      "permissions": ["Move Members"]
+      "permissions": []
     },
     {
-      "name": "stop",
+      "name": "fun",
       "usage_count": 0,
-      "category": "music",
-      "description": "Clears the queue and stops playback completely.",
+      "category": "fun",
+      "description": "Jeyy image effects",
       "arguments": [],
-      "permissions": ["Move Members"]
+      "permissions": []
     },
     {
-      "name": "nowplaying",
+      "name": "fun ascii",
       "usage_count": 0,
-      "category": "music",
-      "description": "Shows the track currently playing, with a progress bar and requester.",
+      "category": "fun",
+      "description": "ASCII text style",
+      "arguments": [
+        {
+          "name": "text",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fun player",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Discord player card",
+      "arguments": [
+        {
+          "name": "title",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "seconds_played",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "total_seconds",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "thumbnail_url",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fun spotifycard",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Discord Spotify card",
+      "arguments": [
+        {
+          "name": "title",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "cover_url",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "duration_seconds",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "start_timestamp",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "artists",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fun wheel",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Spin wheel",
+      "arguments": [
+        {
+          "name": "options",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fun jeyyscrapbook",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Scrapbook text image",
+      "arguments": [
+        {
+          "name": "text",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fun jeyyglitch",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Glitch effect on an image",
+      "arguments": [
+        {
+          "name": "level",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fun jeyyfire",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Fire effect on an image",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "fun jeyyneon",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Neon effect on an image",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "fun jeyybomb",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Bomb effect on an image",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "fun jeyybonks",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Bonks effect on an image",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "fun jeyycartoon",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Cartoon effect on an image",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "serverinfo",
+      "usage_count": 0,
+      "category": "information",
+      "description": "View server information",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "userinfo",
+      "usage_count": 0,
+      "category": "information",
+      "description": "View user information",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "banner",
+      "usage_count": 0,
+      "category": "information",
+      "description": "Show a user's banner",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "User",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "avatar",
+      "usage_count": 0,
+      "category": "information",
+      "description": "Show a user's avatar",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "User",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "serverbanner",
+      "usage_count": 0,
+      "category": "information",
+      "description": "Show the server banner",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "servericon",
+      "usage_count": 0,
+      "category": "information",
+      "description": "Show the server icon",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "channelinfo",
+      "usage_count": 0,
+      "category": "information",
+      "description": "View channel information",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "sticker",
+      "usage_count": 0,
+      "category": "information",
+      "description": "View the server's stickers",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "support",
+      "usage_count": 0,
+      "category": "information",
+      "description": "Get the support server invite",
       "arguments": [],
       "permissions": []
     },
     {
       "name": "spotify",
       "usage_count": 0,
-      "category": "integrations",
-      "description": "Looks up a track, artist, or album on Spotify with a playable preview.",
+      "category": "information",
+      "description": "View someone's Spotify activity",
       "arguments": [
-        { "name": "query", "description": "The track, artist, or album to search for.", "required": true },
-        { "name": "type", "description": "What to search for: track, artist, or album. Defaults to track.", "required": false }
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        }
       ],
       "permissions": []
     },
     {
-      "name": "github",
+      "name": "inviteinfo",
       "usage_count": 0,
-      "category": "integrations",
-      "description": "Shows a GitHub profile or repository, including stars and recent commits.",
+      "category": "information",
+      "description": "View info about an invite",
       "arguments": [
-        { "name": "target", "description": "A username or owner/repo pair, e.g. hollow-hq/XryWeb.", "required": true }
+        {
+          "name": "invite",
+          "description": "Text",
+          "required": false
+        }
       ],
       "permissions": []
     },
     {
-      "name": "youtube",
+      "name": "invite",
       "usage_count": 0,
-      "category": "integrations",
-      "description": "Shows a YouTube video or channel with views, likes, and upload date.",
+      "category": "information",
+      "description": "Invite hollow to your server",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "ping",
+      "usage_count": 0,
+      "category": "information",
+      "description": "Check the bot's latency",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "botinfo",
+      "usage_count": 0,
+      "category": "information",
+      "description": "Show information about the bot",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "ban",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Ban someone with confirmation",
       "arguments": [
-        { "name": "query", "description": "A video URL, channel handle, or search term.", "required": true }
+        {
+          "name": "user",
+          "description": "User",
+          "required": true
+        },
+        {
+          "name": "duration",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Ban Members"
+      ]
+    },
+    {
+      "name": "unban",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unban someone",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Ban Members"
+      ]
+    },
+    {
+      "name": "kick",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Kick someone with confirmation",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Kick Members"
+      ]
+    },
+    {
+      "name": "timeout",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Timeout someone with confirmation",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "duration",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "untimeout",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Untimeout someone",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "reactmute",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Mute someones ability to react to messages",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "unreactmute",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unmute someones ability to react",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "imagemute",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Mute someones ability to send images",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "unimagemute",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unmute someones ability to send images",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "warn",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Warn someone",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "duration",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "unwarn",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unwarn someone",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "unbanall",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unban everyone with confirmation",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "unmuteall",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unmute everyone who is muted with confirmation",
+      "arguments": [],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "unwarnall",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unwarn everyone who has a warning ONCE (deduct one)",
+      "arguments": [],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "resetwarns",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Remove everyones warnings",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "nuke",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Delete and recreate a channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Channels"
+      ]
+    },
+    {
+      "name": "snipe",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "View the last deleted message",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
       ],
       "permissions": []
     },
     {
-      "name": "soundcloud",
+      "name": "editsnipe",
       "usage_count": 0,
-      "category": "integrations",
-      "description": "Looks up a track or profile on SoundCloud and posts a playable link.",
+      "category": "moderation",
+      "description": "View the last edited message (before/after)",
       "arguments": [
-        { "name": "query", "description": "A track URL, artist name, or search term.", "required": true }
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "reactsnipe",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "View the last reaction on a message",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "clearsnipe",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Clear all snipes.",
+      "arguments": [],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "forcenick",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Force someone's nickname to be that, they cant change it",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "new_name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Nicknames"
+      ]
+    },
+    {
+      "name": "unforcenick",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Remove forced nickname",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Nicknames"
+      ]
+    },
+    {
+      "name": "nickname",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Change someones nickname",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "new_name",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Nicknames"
+      ]
+    },
+    {
+      "name": "resetnickname",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Reset someones server nickname to global",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Nicknames"
+      ]
+    },
+    {
+      "name": "lock",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Lock a channel and prevent users from sending messages",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Channels"
+      ]
+    },
+    {
+      "name": "unlock",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unlock a channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Channels"
+      ]
+    },
+    {
+      "name": "lockall",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Lock every channel (keep snapshot of previous server)",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "unlockall",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Unlock every channel (excluding ones that were locked before)",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "purge",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Bulk-delete messages",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge embed",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages with embeds",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge humans",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages from humans",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge bots",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages from bots",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge links",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages containing links",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge invites",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge discord invite links",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge contains",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages containing a word",
+      "arguments": [
+        {
+          "name": "word",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge emojis",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages containing emojis",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge mentions",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages containing mentions",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge bulkmentions",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages with more than 5 mentions",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge images",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages containing images",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge files",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages containing files/attachments",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "purge length",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Purge messages above a character length",
+      "arguments": [
+        {
+          "name": "length",
+          "description": "Number",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "ghostping",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Ghostping when someone joins the server",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "ghostping add",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Add a ghostping for when someone joins the server",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        },
+        {
+          "name": "delay",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "ghostping remove",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Remove ghostping from a channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "ghostping list",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "List all ghostping channels",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "ghostping edit",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Edit ghostping delay for a channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        },
+        {
+          "name": "delay",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "ghostping reset",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Remove all ghostping configs",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "connect",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Manually connect to the Lavalink node.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "play",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Play a song from YouTube, Spotify, Apple Music, Deezer, or Twitch.",
+      "arguments": [
+        {
+          "name": "query",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "skip",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Skip the currently playing track.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "stop",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Stop everything and leave the voice channel.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "queue",
+      "usage_count": 0,
+      "category": "music",
+      "description": "View the current music queue.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "repeat",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Toggle or set the repeat mode for the queue.",
+      "arguments": [
+        {
+          "name": "mode",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Apply audio presets to the current track.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset nightcore",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Nightcore preset: speeds up and raises pitch.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset daycore",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Daycore preset: slows down and lowers pitch.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset earrape",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Maximum volume + bass boost + distortion.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset bassboost",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Bass boost preset.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset 8d",
+      "usage_count": 0,
+      "category": "music",
+      "description": "8D audio preset.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset chipmunk",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Extremely speeds up the pitch only.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "preset clear",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Remove all presets and reset filters.",
+      "arguments": [],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "volume",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Set the playback volume (1-100).",
+      "arguments": [
+        {
+          "name": "volume",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Connect",
+        "Speak"
+      ]
+    },
+    {
+      "name": "antiraid",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Protect your server from raid/flood attacks.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid joins",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Trigger when several members join within the same window.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        },
+        {
+          "name": "flags",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid mentions",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Trigger when a single message contains too many mentions.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        },
+        {
+          "name": "flags",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid avatar",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish accounts with default avatars.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        },
+        {
+          "name": "flags",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid automation",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish accounts that are only online via a web client.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        },
+        {
+          "name": "flags",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid stats",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Show the current antiraid configuration.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid filter",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Manage Discord's AutoMod filters for this guild.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid filter links",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Enable an AutoMod rule that blocks link types.",
+      "arguments": [
+        {
+          "name": "filter_type",
+          "description": "One of: invites, external, all",
+          "required": true
+        },
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        },
+        {
+          "name": "flags",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid filter exempt",
+      "usage_count": 0,
+      "category": "security",
+      "description": "View current AutoMod filter exemptions.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid filter exempt-add",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Add a role or member to the AutoMod exemption list.",
+      "arguments": [
+        {
+          "name": "target",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid filter exempt-remove",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Remove a role from the AutoMod exemption list.",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antiraid filter exempt-list",
+      "usage_count": 0,
+      "category": "security",
+      "description": "List all roles exempt from AutoMod filters.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Protect your server from malicious administrators.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke settings",
+      "usage_count": 0,
+      "category": "security",
+      "description": "View the antinuke configuration.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Toggle individual antinuke modules.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules bot",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Prevent admins from adding bots.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules ban",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish admins who mass-ban members.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules kick",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish admins who mass-kick members.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules role",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish admins who bulk-modify roles.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules channel",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish admins who bulk-modify channels.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules webhook",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish admins who create webhooks.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke modules emoji",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Punish admins who bulk-modify emojis.",
+      "arguments": [
+        {
+          "name": "status",
+          "description": "Yes or no",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke admins",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Manage antinuke admins.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke admins add",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Grant a member antinuke admin rights.",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke admins remove",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Revoke a member's antinuke admin rights.",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke whitelist",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Manage antinuke whitelisted members.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "antinuke whitelist add",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Whitelist a member from antinuke.",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "antinuke whitelist remove",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Remove a member from antinuke whitelist.",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "antinuke whitelist list",
+      "usage_count": 0,
+      "category": "security",
+      "description": "List whitelisted members.",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "antinuke reset",
+      "usage_count": 0,
+      "category": "security",
+      "description": "Reset every antinuke setting for this guild.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "log",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage server logging",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "log aio",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Create and configure the logging channels",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "log ignore",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Exclude users, channels, or roles from logs",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "log unignore",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove logging exclusions",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "log ignore user",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Ignore a user in logs",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "log ignore channel",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Ignore a channel in logs",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "log ignore role",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Ignore members with a role in logs",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "log unignore user",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Stop ignoring a user in logs",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "log unignore channel",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Stop ignoring a channel in logs",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "log unignore role",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Stop ignoring a role in logs",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "log ignore list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View logging exclusions",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "fakepermissions",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage permissions granted only within hollow",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "fakepermissions add",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Give a role a fake permission",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        },
+        {
+          "name": "permission",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fakepermissions remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove all fake permissions from a role",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "fakepermissions reset",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Reset every fake permission",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "fakepermissions list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List all configured fake permissions",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "fakepermissions permissions",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List valid fake permissions",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "firstmessage",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Give link to the first ever message in the channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "welcome",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage the welcomer",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome channel",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage welcome channels",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome channel set",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set a welcome channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome channel remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove a welcome channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome channel list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List all welcome channels",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome setup",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Setup the welcomer in an interactive wizard",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome variables",
+      "usage_count": 0,
+      "category": "server",
+      "description": "See the available welcome variables (tagscript)",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "welcome message",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage the welcome message",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome message preview",
+      "usage_count": 0,
+      "category": "server",
+      "description": "See how your welcome message looks",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome message set",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set a welcome message (Tagscript & EmbedBuilder supported)",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome message remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove the welcome message",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome dm",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage welcome DMs",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome dm status",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Check if DM welcomes are enabled",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome dm enable",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Enable DM welcomes",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "welcome dm disable",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Disable DM welcomes",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage the leaver",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver channel",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage leave channels",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver channel set",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set a leave channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver channel remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove a leave channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver channel list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List all leave channels",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver setup",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Setup the leaver in an interactive wizard",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver variables",
+      "usage_count": 0,
+      "category": "server",
+      "description": "See the available leave variables (tagscript)",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "leaver message",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage the leave message",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver message preview",
+      "usage_count": 0,
+      "category": "server",
+      "description": "See how your leave message looks",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver message set",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set a leave message (Tagscript & EmbedBuilder supported)",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "leaver message remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove the leave message",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "sticky",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage sticky messages",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "sticky set",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set a sticky message",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "sticky list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List all sticky messages",
+      "arguments": [],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "sticky edit",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Edit a sticky message",
+      "arguments": [
+        {
+          "name": "new_message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "sticky remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove a sticky message",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "admin",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Server administration utilities",
+      "arguments": [],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "admin viewwarnings",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View warnings about a user",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "viewwarnings",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View warnings about a user",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "admin notes",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Keep notes about users",
+      "arguments": [],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "admin notes add",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Keep a note about this user",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "note",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "admin notes remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove a note about a user",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        },
+        {
+          "name": "index",
+          "description": "Number",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "admin notes list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List all notes",
+      "arguments": [],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "admin notes view",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View notes about a user",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "admin cleanup",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Clean up unused roles, channels and bots",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "admin cleanup channels",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Find channels with no recent activity",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "admin cleanup roles",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Find and remove roles with no members",
+      "arguments": [],
+      "permissions": [
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "admin cleanup duplicates",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Find duplicate roles and channels",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "admin cleanup bots",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List all bots and what they can do",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "admin history",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View complete moderation history for a user",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "admin recent",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View recent moderation actions",
+      "arguments": [],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "admin recent kicks",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View recent kicks",
+      "arguments": [],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "admin recent bans",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View recent bans",
+      "arguments": [],
+      "permissions": [
+        "Ban Members"
+      ]
+    },
+    {
+      "name": "admin recent timeouts",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View recent timeouts",
+      "arguments": [],
+      "permissions": [
+        "Moderate Members"
+      ]
+    },
+    {
+      "name": "admin announce",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Send an announcement to a channel",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "webhook",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage webhooks in your server",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "webhook list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List all webhooks",
+      "arguments": [],
+      "permissions": [
+        "Manage Webhooks"
+      ]
+    },
+    {
+      "name": "webhook create",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Create a new webhook in the current channel",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Webhooks"
+      ]
+    },
+    {
+      "name": "webhook recreate",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Recreate a webhook from its identifier",
+      "arguments": [
+        {
+          "name": "identifier",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Webhooks"
+      ]
+    },
+    {
+      "name": "webhook lock",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Lock your webhook from being used by others",
+      "arguments": [
+        {
+          "name": "identifier",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "webhook unlock",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Unlock your webhook",
+      "arguments": [
+        {
+          "name": "identifier",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "webhook send",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Send a message using a webhook | Supports Tagscript and Embed",
+      "arguments": [
+        {
+          "name": "identifier",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "webhook edit",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Edit a message sent by a webhook | Supports Tagscript and Embed",
+      "arguments": [
+        {
+          "name": "message_link_or_id",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "message",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Messages"
+      ]
+    },
+    {
+      "name": "boost",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage boost notifications",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost channel",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set the boost notification channel",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost channel set",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set boost notification channel",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost message",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set the boost message",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost message set",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set boost message (Tagscript & Embed supported)",
+      "arguments": [
+        {
+          "name": "message",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost message preview",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Preview the boost message",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove boost notifications",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost view",
+      "usage_count": 0,
+      "category": "server",
+      "description": "View the current boost configuration",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boost variables",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List available boost variables",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage custom booster roles for boosters",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole setup",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Enable custom booster roles",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "boosterrole disable",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Disable booster roles and remove tracking",
+      "arguments": [],
+      "permissions": [
+        "Administrator"
+      ]
+    },
+    {
+      "name": "boosterrole base",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set the role that booster roles are created under",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "boosterrole create",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Create your booster role",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "color",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove your booster role",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole include",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Associate an existing role as a member's booster role",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": true
+        },
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "boosterrole name",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Rename your booster role",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole color",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Recolor your booster role",
+      "arguments": [
+        {
+          "name": "color",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole icon",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set your booster role icon",
+      "arguments": [
+        {
+          "name": "url",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "file",
+          "description": "File attachment",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole hoist",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Toggle whether booster roles are shown separately",
+      "arguments": [],
+      "permissions": [
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "boosterrole list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List every booster role",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole limit",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set the maximum number of booster roles per booster",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "boosterrole sync",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Re-stack all booster roles under the base role",
+      "arguments": [],
+      "permissions": [
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "boosterrole filter",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage filtered words for booster roles",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boosterrole filter add",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Add a filtered word",
+      "arguments": [
+        {
+          "name": "word",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boosterrole filter remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove a filtered word",
+      "arguments": [
+        {
+          "name": "word",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boosterrole filter list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List filtered words",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "boosterrole share",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Share your booster role with another member",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole shares",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Manage your booster role shares",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole shares list",
+      "usage_count": 0,
+      "category": "server",
+      "description": "List members you've shared your booster role with",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole shares remove",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Stop sharing your booster role with a member",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole shares leave",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Remove yourself from booster roles shared with you",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "boosterrole shares max",
+      "usage_count": 0,
+      "category": "server",
+      "description": "Set the booster-role share limit",
+      "arguments": [
+        {
+          "name": "amount",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "voicemaster",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Show help and manage the VoiceMaster system",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster setup",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Create your first VoiceMaster hub",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild",
+        "Manage Channels",
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "voicemaster add",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Add an extra join-to-create hub (max 3 total)",
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Text",
+          "required": false
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild",
+        "Manage Channels"
+      ]
+    },
+    {
+      "name": "voicemaster removehub",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Remove an extra join-to-create hub",
+      "arguments": [
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild",
+        "Manage Channels"
+      ]
+    },
+    {
+      "name": "voicemaster reset",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Delete the VoiceMaster setup",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild",
+        "Manage Channels",
+        "Manage Roles"
+      ]
+    },
+    {
+      "name": "voicemaster menu",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Send the voice master interface",
+      "arguments": [
+        {
+          "name": "sendinterface",
+          "description": "Yes or no",
+          "required": false
+        },
+        {
+          "name": "channel",
+          "description": "Channel",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild",
+        "Manage Channels"
+      ]
+    },
+    {
+      "name": "voicemaster default",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Configure defaults for new voice channels",
+      "arguments": [],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "voicemaster default bitrate",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Set the default bitrate for new channels (8-96 kbps)",
+      "arguments": [
+        {
+          "name": "kbps",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "voicemaster default interface",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Toggle the control panel inside new channels",
+      "arguments": [
+        {
+          "name": "bool",
+          "description": "Yes or no",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "voicemaster default region",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Set the default region for new channels",
+      "arguments": [
+        {
+          "name": "region",
+          "description": "Text",
+          "required": true
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "voicemaster default role",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Set the role new channels open for (defaults to everyone)",
+      "arguments": [
+        {
+          "name": "role",
+          "description": "Role",
+          "required": false
+        }
+      ],
+      "permissions": [
+        "Manage Guild"
+      ]
+    },
+    {
+      "name": "voicemaster claim",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Claim a voice channel",
+      "arguments": [
+        {
+          "name": "own",
+          "description": "Text",
+          "required": false
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster delete",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Delete your voice channel",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster bitrate",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Set your channel's bitrate (8-96 kbps)",
+      "arguments": [
+        {
+          "name": "kbps",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster limit",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Set your channel's user limit (0-99)",
+      "arguments": [
+        {
+          "name": "users",
+          "description": "Number",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster lock",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Lock your voice channel",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster unlock",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Unlock your voice channel",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster hide",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Hide your voice channel",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster reveal",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Reveal your voice channel",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster temporary",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Toggle whether empty voice channels are deleted",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster permit",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Allow a member into your channel",
+      "arguments": [
+        {
+          "name": "allow",
+          "description": "Text",
+          "required": true
+        },
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster reject",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Remove and block a member from your channel",
+      "arguments": [
+        {
+          "name": "member",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster drag",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Pull a member in voice into your channel",
+      "arguments": [
+        {
+          "name": "user",
+          "description": "Server member",
+          "required": true
+        }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "voicemaster region",
+      "usage_count": 0,
+      "category": "voicemaster",
+      "description": "Set your channel's voice region (or 'auto')",
+      "arguments": [
+        {
+          "name": "region",
+          "description": "Text",
+          "required": true
+        }
       ],
       "permissions": []
     }
