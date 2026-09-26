@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Commands — Hollow</title>
-<meta name="description" content="Every Hollow command, with its category, description, arguments and required permissions. Search, filter, and copy instantly.">
+<title>Privacy Policy — Hollow</title>
+<meta name="description" content="How Hollow collects, uses, and protects data for you and your Discord server.">
 <meta name="theme-color" content="#0a0612">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -56,59 +56,62 @@
 
   <section class="page-hero">
     <div class="container">
-      <h1 class="reveal"><span class="accent">Commands</span></h1>
-      <p class="reveal" style="--d:.06s">Every Hollow command, with the arguments and permissions each one needs. Search, sort, and copy — then click a row for the full breakdown.</p>
+      <span class="eyebrow reveal">legal / privacy</span>
+      <h1 class="reveal" style="--d:.06s"><span class="accent">Privacy Policy</span></h1>
+      <p class="reveal" style="--d:.12s">Last updated: 26 September 2026 — what Hollow collects, why, and how to get your data removed.</p>
     </div>
   </section>
 
-  <section class="section" style="padding-top: clamp(24px, 3vw, 40px);">
-    <div class="container">
+  <div class="container">
+    <div class="prose reveal">
 
-      <div class="cmd-controls reveal">
-        <div class="search-field">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <label class="sr-only" for="commandSearch">Search commands</label>
-          <input id="commandSearch" type="search" placeholder="Search commands…" autocomplete="off">
-        </div>
-
-        <div class="sort-select">
-          <label class="sr-only" for="sortSelect">Sort commands</label>
-          <select id="sortSelect">
-            <option value="az" selected>Name A–Z</option>
-            <option value="za">Name Z–A</option>
-            <option value="category">Category</option>
-          </select>
-        </div>
+      <div class="callout">
+        This is a template policy for the Hollow bot and website. Have a lawyer review it before you treat it as final.
       </div>
 
-      <div class="pill-row reveal" id="pillRow" style="--d:.06s"></div>
+      <h2>What we collect</h2>
+      <p>Hollow only requests the Discord permissions it needs to function. Depending on the modules you enable, that includes:</p>
+      <ul>
+        <li><strong>Server data</strong> — server ID, channel IDs, role IDs, and enabled module settings.</li>
+        <li><strong>User data</strong> — user IDs, roles, join dates, and XP/level progress.</li>
+        <li><strong>Command data</strong> — which commands were run, by whom, and when, used for abuse prevention and analytics.</li>
+        <li><strong>Moderation records</strong> — warnings, timeouts, kicks, and bans issued through Hollow.</li>
+        <li><strong>Message content</strong> — only when a moderation feature explicitly requires it (for example sniping or auto-mod), and only long enough to perform that action.</li>
+      </ul>
 
-      <p class="result-meta" id="resultMeta" aria-live="polite"></p>
+      <h2>What we never collect</h2>
+      <ul>
+        <li>Direct messages, unless a member voluntarily submits them for support.</li>
+        <li>Payment information — Hollow does not process payments on this website.</li>
+        <li>Passwords, emails, or government identifiers.</li>
+      </ul>
 
-      <div class="table-wrap tall reveal" style="--d:.1s">
-        <table class="cmd-table" id="commandTable">
-          <thead>
-            <tr>
-              <th scope="col">Command</th>
-              <th scope="col">Category</th>
-              <th scope="col">Description</th>
-              <th scope="col" class="col-copy">Copy</th>
-            </tr>
-          </thead>
-          <tbody id="commandBody"></tbody>
-        </table>
-      </div>
+      <h2>How we use it</h2>
+      <ul>
+        <li>To deliver command responses, moderation actions, and level progression.</li>
+        <li>To detect spam, raids, and abuse of the bot.</li>
+        <li>To maintain aggregate statistics such as server and command counts shown on this website.</li>
+      </ul>
+      <p>We do not sell, rent, or trade your data. Ever.</p>
 
-      <div class="empty-state" id="emptyState">No commands match that search.</div>
+      <h2>Storage and retention</h2>
+      <p>Operational data is stored on infrastructure provided by Discord, Vercel, and any database providers Hollow uses. Data is retained while your server uses the bot, and deleted within 30 days of Hollow being removed from your server or upon a valid deletion request.</p>
 
-      <div class="table-foot">
-        <a class="link-arrow" href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">
-          Add Hollow to your server
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
+      <h2>Third parties</h2>
+      <ul>
+        <li><strong>Discord</strong> — governed by the <a href="https://discord.com/privacy" target="_blank" rel="noopener">Discord Privacy Policy</a>.</li>
+        <li><strong>Vercel</strong> — hosts this website and the Hollow API.</li>
+        <li><strong>Integration providers</strong> (Spotify, YouTube, GitHub, and similar) — queried only when a member runs the relevant command.</li>
+      </ul>
+
+      <h2>Your rights</h2>
+      <p>You can request a copy of your data, or ask us to delete it, at any time. Server owners can remove Hollow from their server to trigger automated deletion.</p>
+
+      <h2>Contact</h2>
+      <p>Open a ticket in the <a href="https://discord.gg/mScRXVGQ8U">support server</a> for any privacy question, or to request deletion of your data.</p>
+
     </div>
-  </section>
+  </div>
 
 </main>
 
@@ -155,7 +158,6 @@
         <h4>Support</h4>
         <ul>
           <li><a href="https://discord.gg/mScRXVGQ8U">Support Server</a></li>
-          <!-- Replace with the real dashboard URL when available -->
           <li><a href="https://discord.gg/mScRXVGQ8U">Dashboard</a></li>
           <li><a href="https://github.com/hollow-hq/hollow">GitHub</a></li>
         </ul>
@@ -186,17 +188,6 @@
   </div>
 </footer>
 
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" id="modalClose" aria-label="Close command details">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div id="modalBody"></div>
-  </div>
-</div>
-
 <script src="main.js" defer></script>
-<script src="commands.js" defer></script>
-
 </body>
 </html>

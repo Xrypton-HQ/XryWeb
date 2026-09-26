@@ -1,131 +1,296 @@
-// api/commands.js
-// Deployed by Vercel at /api/commands, and rewritten to /commands by vercel.json.
-//
-// GET  /commands              -> list every command (optionally filter with ?category= or ?name=)
-// POST /commands               -> add a new command (see body shape below)
-// PUT  /commands               -> update usage counts (body: { usage: [{ name, count }] })
-//
-// NOTE ON PERSISTENCE:
-// Vercel serverless functions run in stateless, ephemeral containers, and the
-// deployed filesystem is read-only. Runtime state is kept in memory and WILL
-// be lost on the next cold start or redeploy. For permanent storage, swap
-// `runtimeCommands` out for a real store (Vercel KV, Postgres, MongoDB, etc.).
 
-const commandsData = require('../commands.json');
+(function () {
+  'use strict';
 
-let runtimeCommands = [...commandsData.commands];
+  var body = document.getElementById('commandBody');
+  if (!body) return;
 
-module.exports = (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  var table = document.getElementById('commandTable');
+  var pillRow = document.getElementById('pillRow');
+  var searchInput = document.getElementById('commandSearch');
+  var sortSelect = document.getElementById('sortSelect');
+  var resultMeta = document.getElementById('resultMeta');
+  var emptyState = document.getElementById('emptyState');
+  var modalOverlay = document.getElementById('modalOverlay');
+  var modalBody = document.getElementById('modalBody');
+  var modalClose = document.getElementById('modalClose');
 
-  if (req.method === 'OPTIONS') {
-    res.status(204).end();
-    return;
+  var limit = parseInt(table && table.dataset.limit, 10) || 0;
+  var allCommands = [];
+  var activeCategory = 'all';
+  var searchTerm = '';
+  var sortMode = 'az';
+  var lastFocusedRow = null;
+
+  function escapeHtml(value) {
+    var div = document.createElement('div');
+    div.textContent = value == null ? '' : String(value);
+    return div.innerHTML;
   }
 
-  if (req.method === 'GET') {
-    const { category, name } = req.query;
-    let results = runtimeCommands;
-
-    if (category) {
-      results = results.filter(
-        (c) => c.category.toLowerCase() === String(category).toLowerCase()
-      );
-    }
-    if (name) {
-      results = results.filter((c) =>
-        c.name.toLowerCase().includes(String(name).toLowerCase())
-      );
-    }
-
-    res.status(200).json({ count: results.length, commands: results });
-    return;
+  function capitalize(value) {
+    value = String(value || '');
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
-  if (req.method === 'POST') {
-    const body = req.body || {};
-    const { name, description, category, arguments: args, permissions } = body;
+  function fetchWithTimeout(url, ms) {
+    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, ms) : null;
+    return fetch(url, controller ? { signal: controller.signal } : undefined)
+      .then(function (res) {
+        if (timer) clearTimeout(timer);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .catch(function (err) {
+        if (timer) clearTimeout(timer);
+        throw err;
+      });
+  }
 
-    if (!name || typeof name !== 'string') {
-      res.status(400).json({ error: '"name" is required and must be a string.' });
-      return;
-    }
-    if (!description || typeof description !== 'string') {
-      res.status(400).json({ error: '"description" is required and must be a string.' });
-      return;
-    }
-    if (args && !Array.isArray(args)) {
-      res.status(400).json({ error: '"arguments" must be an array of { name, description, required }.' });
-      return;
-    }
-    if (permissions && !Array.isArray(permissions)) {
-      res.status(400).json({ error: '"permissions" must be an array of permission name strings.' });
-      return;
-    }
-
-    const exists = runtimeCommands.some(
-      (c) => c.name.toLowerCase() === name.toLowerCase()
-    );
-    if (exists) {
-      res.status(409).json({ error: `A command named "${name}" already exists.` });
-      return;
-    }
-
-    const newCommand = {
-      name: name.toLowerCase(),
-      description,
-      category: category || 'uncategorized',
-      arguments: (args || []).map((a) => ({
-        name: a.name,
-        description: a.description || '',
-        required: Boolean(a.required),
-      })),
-      permissions: permissions || [],
-    };
-
-    runtimeCommands.push(newCommand);
-
-    res.status(201).json({
-      message:
-        'Command added. This is held in memory for this server instance only — ' +
-        'it will not survive a cold start or redeploy. Connect a real database ' +
-        'to persist it permanently.',
-      command: newCommand,
+  function normalise(data) {
+    var list = Array.isArray(data) ? data : (data && data.commands) || [];
+    return list.filter(function (cmd) { return cmd && cmd.name; }).map(function (cmd) {
+      return {
+        name: cmd.name,
+        category: cmd.category || 'other',
+        description: cmd.description || '',
+        arguments: Array.isArray(cmd.arguments) ? cmd.arguments : [],
+        permissions: Array.isArray(cmd.permissions) ? cmd.permissions : [],
+        usage_count: typeof cmd.usage_count === 'number' ? cmd.usage_count : null
+      };
     });
-    return;
   }
 
-  if (req.method === 'PUT') {
-    const body = req.body || {};
-    const { usage } = body;
+  function loadCommands() {
 
-    if (!Array.isArray(usage)) {
-      res.status(400).json({ error: '"usage" must be an array of { name, count }.' });
+    return fetchWithTimeout('/commands', 3000)
+      .catch(function () { return fetch('commands.json').then(function (r) { return r.json(); }); })
+      .then(function (data) { allCommands = normalise(data); })
+      .catch(function () { allCommands = []; })
+      .then(function () {
+        buildPills();
+        render();
+      });
+  }
+
+  function buildPills() {
+    if (!pillRow) return;
+    var categories = [];
+    allCommands.forEach(function (cmd) {
+      if (categories.indexOf(cmd.category) === -1) categories.push(cmd.category);
+    });
+    categories.sort();
+
+    var markup = ['<button class="pill active" data-category="all" type="button">all <span class="count">' +
+      allCommands.length + '</span></button>'];
+    categories.forEach(function (cat) {
+      var count = allCommands.filter(function (c) { return c.category === cat; }).length;
+      markup.push('<button class="pill" data-category="' + escapeHtml(cat) + '" type="button">' +
+        escapeHtml(capitalize(cat)) + ' <span class="count">' + count + '</span></button>');
+    });
+    pillRow.innerHTML = markup.join('');
+
+    pillRow.querySelectorAll('.pill').forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        activeCategory = pill.dataset.category;
+        pillRow.querySelectorAll('.pill').forEach(function (p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+        render();
+      });
+    });
+  }
+
+  function filteredCommands() {
+    var term = searchTerm.trim().toLowerCase();
+    var list = allCommands
+      .filter(function (cmd) {
+        return activeCategory === 'all' || cmd.category === activeCategory;
+      })
+      .filter(function (cmd) {
+        if (!term) return true;
+        return (cmd.name + ' ' + cmd.description + ' ' + cmd.category).toLowerCase().indexOf(term) !== -1;
+      });
+
+    if (sortMode === 'za') {
+      list.sort(function (a, b) { return b.name.localeCompare(a.name); });
+    } else if (sortMode === 'category') {
+      list.sort(function (a, b) {
+        if (a.category !== b.category) return a.category.localeCompare(b.category);
+        return a.name.localeCompare(b.name);
+      });
+    } else {
+      list.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    }
+    return list;
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener('change', function () {
+      sortMode = sortSelect.value;
+      render();
+    });
+  }
+
+  function render() {
+    var matches = filteredCommands();
+    var visible = limit ? matches.slice(0, limit) : matches;
+    var wrap = table ? table.parentElement : null;
+
+    if (resultMeta) {
+      var shown = visible.length;
+      var total = allCommands.length;
+      resultMeta.innerHTML = matches.length === total
+        ? 'Showing <strong>' + shown + '</strong> of <strong>' + total + '</strong> commands'
+        : 'Showing <strong>' + shown + '</strong> of <strong>' + matches.length +
+          '</strong> matching commands <span>(' + total + ' total)</span>';
+    }
+
+    if (matches.length === 0) {
+      if (wrap) wrap.style.display = 'none';
+      if (emptyState) emptyState.classList.add('show');
+      body.innerHTML = '';
       return;
     }
+    if (wrap) wrap.style.display = '';
+    if (emptyState) emptyState.classList.remove('show');
 
-    const index = new Map();
-    for (let i = 0; i < runtimeCommands.length; i += 1) {
-      index.set(runtimeCommands[i].name.toLowerCase(), i);
-    }
+    body.innerHTML = visible.map(function (cmd) {
+      var index = allCommands.indexOf(cmd);
+      return '' +
+        '<tr tabindex="0" data-index="' + index + '">' +
+          '<td class="col-name"><span class="cmd-name"><span class="slash">/</span>' +
+            escapeHtml(cmd.name) + '</span></td>' +
+          '<td class="col-cat"><span class="cat-tag">' + escapeHtml(cmd.category) + '</span></td>' +
+          '<td class="col-desc">' + escapeHtml(cmd.description) + '</td>' +
+          '<td class="col-copy">' +
+            '<button class="copy-btn" type="button" data-copy="' + escapeHtml(cmd.name) + '" ' +
+              'aria-label="Copy /' + escapeHtml(cmd.name) + ' to clipboard">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>' +
+              '<span class="copy-label">Copy</span>' +
+            '</button>' +
+          '</td>' +
+        '</tr>';
+    }).join('');
 
-    const updated = [];
-    usage.forEach((entry) => {
-      const key = String(entry.name || '').toLowerCase();
-      const count = typeof entry.count === 'number' ? entry.count : 0;
-      const i = index.get(key);
-      if (i !== undefined) {
-        runtimeCommands[i].usage_count = count;
-        updated.push(runtimeCommands[i].name);
-      }
+    body.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        copyCommand(btn);
+      });
     });
 
-    res.status(200).json({ updated });
-    return;
+    body.querySelectorAll('tr').forEach(function (row) {
+      row.addEventListener('click', function () {
+        openModal(allCommands[row.dataset.index], row);
+      });
+      row.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(allCommands[row.dataset.index], row);
+        }
+      });
+    });
   }
 
-  res.setHeader('Allow', 'GET, POST, PUT, OPTIONS');
-  res.status(405).json({ error: `Method ${req.method} not allowed.` });
-};
+  function copyCommand(btn) {
+    var text = '/' + btn.dataset.copy;
+    var label = btn.querySelector('.copy-label');
+
+    function done() {
+      btn.classList.add('copied');
+      if (label) label.textContent = 'Copied!';
+      setTimeout(function () {
+        btn.classList.remove('copied');
+        if (label) label.textContent = 'Copy';
+      }, 1600);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { legacyCopy(text, done); });
+    } else {
+      legacyCopy(text, done);
+    }
+  }
+
+  function legacyCopy(text, done) {
+    var area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    try { document.execCommand('copy'); done(); } catch (err) {  }
+    document.body.removeChild(area);
+  }
+
+  function openModal(cmd, row) {
+    if (!modalOverlay || !modalBody || !cmd) return;
+    lastFocusedRow = row || null;
+
+    var argsHtml = cmd.arguments.length
+      ? cmd.arguments.map(function (a) {
+          return '<div class="arg-row">' +
+            '<div>' +
+              '<div class="arg-name">' + escapeHtml(a.name) + '</div>' +
+              '<div class="arg-desc">' + escapeHtml(a.description) + '</div>' +
+            '</div>' +
+            '<span class="arg-badge ' + (a.required ? 'required' : 'optional') + '">' +
+              (a.required ? 'required' : 'optional') + '</span>' +
+          '</div>';
+        }).join('')
+      : '<p class="muted-note">This command takes no arguments.</p>';
+
+    var permsHtml = cmd.permissions.length
+      ? '<div class="perm-list">' + cmd.permissions.map(function (p) {
+          return '<span class="perm-chip">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+              '<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>' +
+            escapeHtml(p) + '</span>';
+        }).join('') + '</div>'
+      : '<p class="muted-note">No special permissions required — anyone can use this.</p>';
+
+    var usageHtml = cmd.usage_count !== null && cmd.usage_count > 0
+      ? '<div class="modal-section"><h4>usage</h4><p class="muted-note">' +
+        cmd.usage_count.toLocaleString() + ' uses</p></div>'
+      : '';
+
+    modalBody.innerHTML =
+      '<span class="cat-tag">' + escapeHtml(cmd.category) + '</span>' +
+      '<div class="cmd-name" id="modalTitle"><span class="slash">/</span>' + escapeHtml(cmd.name) + '</div>' +
+      '<p class="cmd-desc">' + escapeHtml(cmd.description) + '</p>' +
+      usageHtml +
+      '<div class="modal-section"><h4>arguments</h4>' + argsHtml + '</div>' +
+      '<div class="modal-section"><h4>permissions required</h4>' + permsHtml + '</div>';
+
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (modalClose) modalClose.focus();
+  }
+
+  function closeModal() {
+    if (!modalOverlay) return;
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocusedRow && document.contains(lastFocusedRow)) lastFocusedRow.focus();
+  }
+
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modalOverlay) modalOverlay.addEventListener('click', function (e) {
+    if (e.target === modalOverlay) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      searchTerm = searchInput.value;
+      render();
+    });
+  }
+
+  loadCommands();
+})();

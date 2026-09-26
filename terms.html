@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Commands — Hollow</title>
-<meta name="description" content="Every Hollow command, with its category, description, arguments and required permissions. Search, filter, and copy instantly.">
+<title>Terms of Service — Hollow</title>
+<meta name="description" content="The terms that apply when you invite or use the Hollow Discord bot and website.">
 <meta name="theme-color" content="#0a0612">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -56,59 +56,54 @@
 
   <section class="page-hero">
     <div class="container">
-      <h1 class="reveal"><span class="accent">Commands</span></h1>
-      <p class="reveal" style="--d:.06s">Every Hollow command, with the arguments and permissions each one needs. Search, sort, and copy — then click a row for the full breakdown.</p>
+      <span class="eyebrow reveal">legal / terms</span>
+      <h1 class="reveal" style="--d:.06s"><span class="accent">Terms of Service</span></h1>
+      <p class="reveal" style="--d:.12s">Last updated: 26 September 2026 — the rules that apply when you invite or use Hollow.</p>
     </div>
   </section>
 
-  <section class="section" style="padding-top: clamp(24px, 3vw, 40px);">
-    <div class="container">
+  <div class="container">
+    <div class="prose reveal">
 
-      <div class="cmd-controls reveal">
-        <div class="search-field">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <label class="sr-only" for="commandSearch">Search commands</label>
-          <input id="commandSearch" type="search" placeholder="Search commands…" autocomplete="off">
-        </div>
-
-        <div class="sort-select">
-          <label class="sr-only" for="sortSelect">Sort commands</label>
-          <select id="sortSelect">
-            <option value="az" selected>Name A–Z</option>
-            <option value="za">Name Z–A</option>
-            <option value="category">Category</option>
-          </select>
-        </div>
+      <div class="callout">
+        This is a template agreement for the Hollow bot and website. Have a lawyer review it before you treat it as final.
       </div>
 
-      <div class="pill-row reveal" id="pillRow" style="--d:.06s"></div>
+      <h2>1. Acceptance of terms</h2>
+      <p>By inviting Hollow to a Discord server, using its commands, or browsing this website, you agree to these terms. If you do not agree, do not use Hollow.</p>
 
-      <p class="result-meta" id="resultMeta" aria-live="polite"></p>
+      <h2>2. What Hollow provides</h2>
+      <p>Hollow is provided "as is" as an independent project. We may add, change, or remove features, commands, or integrations at any time without notice.</p>
 
-      <div class="table-wrap tall reveal" style="--d:.1s">
-        <table class="cmd-table" id="commandTable">
-          <thead>
-            <tr>
-              <th scope="col">Command</th>
-              <th scope="col">Category</th>
-              <th scope="col">Description</th>
-              <th scope="col" class="col-copy">Copy</th>
-            </tr>
-          </thead>
-          <tbody id="commandBody"></tbody>
-        </table>
-      </div>
+      <h2>3. Acceptable use</h2>
+      <ul>
+        <li>Do not use Hollow to harass, threaten, or harm others.</li>
+        <li>Do not use Hollow to distribute malware, spam, or illegal content.</li>
+        <li>Do not attempt to exploit, overload, reverse engineer, or bypass rate limits on the bot or its API.</li>
+        <li>Do not misrepresent Hollow as your own product or imply endorsement by Discord or any integrated platform.</li>
+      </ul>
+      <p>Violation of these rules may result in Hollow being revoked from your server or your access being blocked.</p>
 
-      <div class="empty-state" id="emptyState">No commands match that search.</div>
+      <h2>4. Server data</h2>
+      <p>You are responsible for obtaining consent from your members before enabling modules that process their activity (welcome messages, leveling, moderation logs). See the <a href="privacy.html">privacy policy</a> for details on what is stored.</p>
 
-      <div class="table-foot">
-        <a class="link-arrow" href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">
-          Add Hollow to your server
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
+      <h2>5. Availability</h2>
+      <p>We aim for high uptime but do not guarantee uninterrupted service. Maintenance, outages, rate limits imposed by Discord, or force majeure may cause temporary downtime.</p>
+
+      <h2>6. Liability</h2>
+      <p>To the maximum extent permitted by law, hollow-hq is not liable for any indirect, incidental, or consequential damages arising from the use of Hollow or this website, including loss of data, messages, roles, or server state.</p>
+
+      <h2>7. Third-party services</h2>
+      <p>Hollow interacts with Discord and various third-party platforms (Spotify, GitHub, and others). Your use of those platforms remains subject to their own terms of service.</p>
+
+      <h2>8. Changes to these terms</h2>
+      <p>We may update these terms periodically. Continued use of Hollow after changes are posted constitutes acceptance of the revised terms.</p>
+
+      <h2>9. Contact</h2>
+      <p>Questions about these terms? Reach out in the <a href="https://discord.gg/mScRXVGQ8U">support server</a>.</p>
+
     </div>
-  </section>
+  </div>
 
 </main>
 
@@ -155,7 +150,6 @@
         <h4>Support</h4>
         <ul>
           <li><a href="https://discord.gg/mScRXVGQ8U">Support Server</a></li>
-          <!-- Replace with the real dashboard URL when available -->
           <li><a href="https://discord.gg/mScRXVGQ8U">Dashboard</a></li>
           <li><a href="https://github.com/hollow-hq/hollow">GitHub</a></li>
         </ul>
@@ -186,17 +180,6 @@
   </div>
 </footer>
 
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" id="modalClose" aria-label="Close command details">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div id="modalBody"></div>
-  </div>
-</div>
-
 <script src="main.js" defer></script>
-<script src="commands.js" defer></script>
-
 </body>
 </html>
