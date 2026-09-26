@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Embed Builder — Hollow</title>
+<meta name="description" content="Build Discord messages and embeds with a live preview. Content, embeds, fields, colours and buttons — copy the JSON or a ready-to-run command.">
+<meta name="theme-color" content="#0a0612">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-capsule">
+    <a class="brand" href="index.html" aria-label="Hollow home">
+      <img class="brand-mark" src="assets/logo.png" alt="Hollow logo" width="30" height="30">
+      <span class="brand-name">Hollow</span>
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+      <a href="index.html#features">Features</a>
+      <a href="commands.html">Commands</a>
+      <a href="docs.html">Documentation</a>
+      <a href="embeds.html">Embeds</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="btn btn-primary btn-sm" href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a>
+      <a class="icon-btn" href="https://discord.gg/mScRXVGQ8U" aria-label="Join the Hollow Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.028C.533 9.046-.32 13.58.099 18.058a.082.082 0 00.031.056 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.042-.106 13.11 13.11 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.029zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419s.956-2.419 2.157-2.419c1.211 0 2.176 1.095 2.157 2.42 0 1.332-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.086-2.157-2.419s.955-2.419 2.157-2.419c1.21 0 2.176 1.095 2.157 2.42 0 1.332-.946 2.418-2.157 2.418z"/></svg>
+      </a>
+      <a class="icon-btn" href="https://github.com/hollow-hq/hollow" aria-label="Hollow on GitHub">
+        <img src="https://cdn.simpleicons.org/github/ffffff" alt="" width="17" height="17">
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+
+<main id="main">
+
+  <section class="mode-pick" id="modePick">
+    <div class="container">
+      <h1 class="mode-title reveal">What are you building?</h1>
+      <p class="mode-sub reveal" style="--d:.06s">A Discord message can use one or the other — not both. Pick a mode and the editor only offers what that mode allows.</p>
+
+      <div class="mode-cards">
+        <button class="mode-card reveal" style="--d:.1s" data-mode="normal" type="button">
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8H5l-2 2V12a8 8 0 018-8h2a8 8 0 018 8z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>
+          </span>
+          <h3>Normal message</h3>
+          <p>Content, up to 10 embeds and buttons. What most servers use.</p>
+          <span class="mode-tags">content · embeds · buttons</span>
+        </button>
+
+        <button class="mode-card reveal" style="--d:.16s" data-mode="v2" type="button">
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </span>
+          <h3>Components V2</h3>
+          <p>Full layout control with containers and galleries. No embeds.</p>
+          <span class="mode-tags">containers · sections · galleries</span>
+        </button>
+      </div>
+
+      <button class="mode-script reveal" style="--d:.22s" id="openScript" type="button">I already have a script to edit</button>
+
+      <p class="mode-hint reveal" style="--d:.26s">Everything runs in your browser — nothing gets uploaded anywhere.</p>
+    </div>
+  </section>
+
+  <section class="editor" id="editor" hidden>
+    <div class="container">
+      <div class="editor-bar">
+        <button class="link-arrow" id="backBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          Modes
+        </button>
+        <div class="editor-actions">
+          <button class="btn btn-ghost btn-sm" id="importBtn" type="button">Paste script</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn" type="button">Clear</button>
+          <button class="btn btn-ghost btn-sm" id="copyScript" type="button">Copy command</button>
+          <button class="btn btn-primary btn-sm" id="copyJson" type="button">Copy JSON</button>
+        </div>
+      </div>
+
+      <div class="editor-grid">
+        <div class="editor-form">
+
+          <div class="form-block" id="v2Panel" hidden>
+            <label class="form-label" for="v2Json">Components V2 payload</label>
+            <textarea id="v2Json" class="code-area" rows="18" spellcheck="false" placeholder='{"content":"hello","components":[{"type":1,"components":[...]}]}'></textarea>
+            <p class="field-hint" id="v2Status">Paste your V2 JSON — it is validated as you type.</p>
+          </div>
+
+          <div id="normalForm">
+            <div class="form-block">
+              <div class="form-head">
+                <label class="form-label" for="fContent">Message content</label>
+                <span class="char-count" id="contentCount">0 / 2000</span>
+              </div>
+              <textarea id="fContent" class="form-area" rows="4" maxlength="2000" placeholder="Optional text that sits above the embed…"></textarea>
+            </div>
+
+            <div class="form-block">
+              <div class="form-head">
+                <span class="form-label">Embed</span>
+                <label class="switch"><input type="checkbox" id="fEmbedOn" checked><span>enabled</span></label>
+              </div>
+
+              <div id="embedFields" class="embed-fields">
+                <div class="form-row">
+                  <div class="field">
+                    <label for="fColor">Colour</label>
+                    <div class="color-row">
+                      <input type="color" id="fColor" value="#8b5cf6">
+                      <input type="text" id="fColorHex" value="#8b5cf6" maxlength="7" spellcheck="false">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="fTitle">Title</label>
+                    <input type="text" id="fTitle" maxlength="256" placeholder="Server boosts tripled">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="fDesc">Description</label>
+                  <textarea id="fDesc" class="form-area" rows="4" maxlength="4096" placeholder="Markdown works — **bold**, *italic*, [links](https://example.com)"></textarea>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="fAuthorName">Author name</label>
+                    <input type="text" id="fAuthorName" maxlength="256" placeholder="hollow-hq">
+                  </div>
+                  <div class="field">
+                    <label for="fAuthorIcon">Author icon URL</label>
+                    <input type="url" id="fAuthorIcon" placeholder="https://…/avatar.png">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="fThumb">Thumbnail URL</label>
+                    <input type="url" id="fThumb" placeholder="https://…/thumb.png">
+                  </div>
+                  <div class="field">
+                    <label for="fImage">Image URL</label>
+                    <input type="url" id="fImage" placeholder="https://…/banner.png">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="fFooterText">Footer text</label>
+                    <input type="text" id="fFooterText" maxlength="2048" placeholder="Hollow • #announcements">
+                  </div>
+                  <div class="field">
+                    <label for="fFooterIcon">Footer icon URL</label>
+                    <input type="url" id="fFooterIcon" placeholder="https://…/icon.png">
+                  </div>
+                </div>
+
+                <label class="switch"><input type="checkbox" id="fTimestamp"><span>Timestamp</span></label>
+              </div>
+            </div>
+
+            <div class="form-block">
+              <div class="form-head">
+                <span class="form-label">Fields <em class="label-note" id="fieldCount">0 / 25</em></span>
+                <button class="mini-btn" id="addField" type="button">+ Add field</button>
+              </div>
+              <div id="fieldList" class="item-list"></div>
+            </div>
+
+            <div class="form-block">
+              <div class="form-head">
+                <span class="form-label">Buttons <em class="label-note" id="buttonCount">0 / 5</em></span>
+                <button class="mini-btn" id="addButton" type="button">+ Add button</button>
+              </div>
+              <div id="buttonList" class="item-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-preview">
+          <span class="preview-label">preview</span>
+          <div class="discord-channel">
+            <div class="d-msg">
+              <div class="d-avatar"><img src="assets/logo.png" alt="Hollow avatar" width="42" height="42"></div>
+              <div class="d-body">
+                <div class="d-head"><strong>Hollow</strong><span class="bot-tag">App</span><span class="d-time">Today at 4:20 PM</span></div>
+                <div class="d-content" id="pvContent" hidden></div>
+
+                <div class="d-embed" id="pvEmbed" hidden>
+                  <img class="d-thumb" id="pvThumb" alt="" hidden>
+                  <div class="d-embed-author" id="pvAuthor" hidden><img id="pvAuthorIcon" alt="" hidden><span id="pvAuthorName"></span></div>
+                  <div class="d-title" id="pvTitle" hidden></div>
+                  <div class="d-desc" id="pvDesc" hidden></div>
+                  <div class="d-fields" id="pvFields"></div>
+                  <img class="d-image" id="pvImage" alt="" hidden>
+                  <div class="d-foot" id="pvFoot" hidden><img id="pvFootIcon" alt="" hidden><span id="pvFootText"></span><span id="pvTime"></span></div>
+                </div>
+
+                <div class="d-buttons" id="pvButtons"></div>
+              </div>
+            </div>
+            <div class="d-composer">Message #general</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="modal-overlay" id="importOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="importTitle">
+    <button class="modal-close" id="importClose" aria-label="Close import">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="cmd-name" id="importTitle">Paste a script</div>
+    <p class="cmd-desc">Drop in JSON from this builder or the raw Discord message format — it loads straight into the editor.</p>
+    <textarea id="importText" class="code-area" rows="12" spellcheck="false" placeholder='{"content":"hi","embeds":[{"title":"Hello","color":9159291}]}'></textarea>
+    <p class="field-hint" id="importStatus"></p>
+    <div class="import-actions">
+      <button class="btn btn-primary btn-sm" id="importLoad" type="button">Load into editor</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="Hollow home">
+          <img class="brand-mark" src="assets/logo.png" alt="Hollow logo" width="30" height="30">
+          <span class="brand-name">Hollow</span>
+        </a>
+        <p>The all-in-one Discord bot for moderation, automation, leveling, and fun — built for communities of every size.</p>
+        <div class="socials">
+          <a class="social-btn" href="https://discord.gg/mScRXVGQ8U" aria-label="Hollow on Discord">
+            <img src="https://cdn.simpleicons.org/discord/ffffff" alt="" width="17" height="17" loading="lazy">
+          </a>
+          <a class="social-btn" href="https://github.com/hollow-hq/hollow" aria-label="Hollow on GitHub">
+            <img src="https://cdn.simpleicons.org/github/ffffff" alt="" width="17" height="17" loading="lazy">
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="commands.html">Commands</a></li>
+          <li><a href="embeds.html">Embeds</a></li>
+          <li><a href="index.html#integrations">Integrations</a></li>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Documentation</h4>
+        <ul>
+          <li><a href="docs.html">Getting Started</a></li>
+          <li><a href="commands.html">Command Reference</a></li>
+          <li><a href="docs.html#concepts">Core Concepts</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="https://discord.gg/mScRXVGQ8U">Support Server</a></li>
+          <li><a href="https://github.com/hollow-hq/hollow">GitHub</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer">
+      Hollow is an independent project and is not affiliated with, endorsed by, or sponsored by Discord Inc. or any of the
+      platforms referenced in its integrations. All product names, logos, and trademarks are the property of their respective
+      owners. Server names, member counts, and testimonials shown on this page are illustrative placeholders.
+    </p>
+
+    <div class="footer-bottom">
+      <p class="credit">© 2026 Hollow — <strong>Made by hollow-hq</strong></p>
+      <div class="footer-legal">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+<script src="embeds.js" defer></script>
+
+</body>
+</html>

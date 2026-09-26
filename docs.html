@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Documentation — Hollow</title>
-<meta name="description" content="Get Hollow running in your Discord server: invite, permissions, leveling, automations, and integrations.">
+<meta name="description" content="Get Hollow running in your Discord server: invite, permissions, moderation, leveling, automations, and integrations.">
 <meta name="theme-color" content="#0a0612">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -14,104 +14,186 @@
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
-<body>
+<body class="docs-page">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div class="bg-glow" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
 
-<header class="nav" id="nav">
-  <div class="nav-capsule">
-    <a class="brand" href="index.html" aria-label="Hollow home">
-      <img class="brand-mark" src="assets/logo.png" alt="Hollow logo" width="30" height="30">
-      <span class="brand-name">Hollow</span>
-    </a>
+<div class="docs-shell">
 
-    <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
-      <a href="index.html#features">Features</a>
-      <a href="commands.html">Commands</a>
-      <a href="docs.html">Documentation</a>
-    </nav>
-
-    <div class="nav-actions">
-      <a class="btn btn-primary btn-sm" href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a>
-      <a class="icon-btn" href="https://discord.gg/mScRXVGQ8U" aria-label="Join the Hollow Discord">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.028C.533 9.046-.32 13.58.099 18.058a.082.082 0 00.031.056 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.042-.106 13.11 13.11 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.029zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419s.956-2.419 2.157-2.419c1.211 0 2.176 1.095 2.157 2.42 0 1.332-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.086-2.157-2.419s.955-2.419 2.157-2.419c1.21 0 2.176 1.095 2.157 2.42 0 1.332-.946 2.418-2.157 2.418z"/></svg>
+  <aside class="docs-sidebar" id="docsSidebar">
+    <div class="docs-brand">
+      <a class="brand" href="index.html" aria-label="Hollow home">
+        <img class="brand-mark" src="assets/logo.png" alt="Hollow logo" width="30" height="30">
+        <span class="brand-name">Hollow</span>
       </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
+      <span class="docs-badge">docs</span>
     </div>
-  </div>
-</header>
-<div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
 
-<main id="main">
-
-  <section class="page-hero">
-    <div class="container">
-      <span class="eyebrow reveal">docs / getting started</span>
-      <h1 class="reveal" style="--d:.06s"><span class="accent">Documentation</span></h1>
-      <p class="reveal" style="--d:.12s">Everything you need to get Hollow invited, configured, and running smoothly in your server.</p>
+    <div class="docs-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="search" id="docsSearch" placeholder="Search the docs…" aria-label="Search documentation" autocomplete="off">
     </div>
-  </section>
 
-  <div class="container">
-    <div class="prose reveal">
-
-      <h2>Getting started</h2>
-      <ol class="step-list">
-        <li><strong>Invite Hollow.</strong> Hit <a href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a>, pick your server, and approve the requested permissions.</li>
-        <li><strong>Grant permissions.</strong> Make sure Hollow's role sits <em>above</em> the roles it manages, with <code>Manage Messages</code>, <code>Moderate Members</code> and <code>Manage Roles</code> enabled for full functionality.</li>
-        <li><strong>Configure your modules.</strong> Set a welcome channel, enable auto-role, and drop reaction roles wherever members self-assign.</li>
-        <li><strong>Explore commands.</strong> Browse the full list on the <a href="commands.html">commands page</a> — every entry shows its arguments and required permissions.</li>
-      </ol>
-
-      <div class="callout">
-        Something not responding? Join the <a href="https://discord.gg/mScRXVGQ8U">support server</a> and open a ticket — most setup issues come from role hierarchy.
+    <nav class="docs-nav" id="docsNav" aria-label="Documentation">
+      <div class="docs-group">
+        <h4>Overview</h4>
+        <a href="#getting-started">Getting Started</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="commands.html">Commands</a>
+        <a href="embeds.html">Embed Builder</a>
       </div>
+      <div class="docs-group">
+        <h4>Features</h4>
+        <a href="#moderation">Moderation</a>
+        <a href="#leveling">Leveling</a>
+        <a href="#automations">Automations</a>
+      </div>
+      <div class="docs-group">
+        <h4>Integrations</h4>
+        <a href="#integrations">Platforms &amp; Lookups</a>
+        <a href="index.html#integrations">Showcase</a>
+      </div>
+      <div class="docs-group">
+        <h4>Getting Help</h4>
+        <a href="#help">Support Server</a>
+        <a href="https://github.com/hollow-hq/hollow">GitHub</a>
+      </div>
+    </nav>
+    <p class="docs-empty" id="docsEmpty" hidden>No pages match that search.</p>
+  </aside>
 
-      <h2>Core concepts</h2>
-      <h3>Commands</h3>
-      <p>Every Hollow feature is exposed as a slash command. Type <code>/</code> in Discord to see the live list, including inline argument hints. The <a href="commands.html">commands page</a> mirrors this data from Hollow's public API.</p>
+  <div class="docs-main">
 
-      <h3>Permissions</h3>
-      <p>Moderation commands check Discord's native permissions first, then Hollow's own case log. Members with <code>Administrator</code> bypass all checks; everyone else needs the permission listed on the command card.</p>
+    <header class="docs-topbar">
+      <div class="docs-topbar-left">
+        <button class="docs-menu-btn" id="docsMenu" aria-label="Open docs navigation" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <span>Documentation</span>
+      </div>
+      <nav class="docs-topbar-links" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="commands.html">Commands</a>
+        <a href="embeds.html">Embeds</a>
+        <a class="icon-btn" href="https://github.com/hollow-hq/hollow" aria-label="Hollow on GitHub">
+          <img src="https://cdn.simpleicons.org/github/ffffff" alt="" width="17" height="17">
+        </a>
+        <a class="icon-btn" href="https://discord.gg/mScRXVGQ8U" aria-label="Join the Hollow Discord">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.028C.533 9.046-.32 13.58.099 18.058a.082.082 0 00.031.056 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.042-.106 13.11 13.11 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.029zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419s.956-2.419 2.157-2.419c1.211 0 2.176 1.095 2.157 2.42 0 1.332-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.086-2.157-2.419s.955-2.419 2.157-2.419c1.21 0 2.176 1.095 2.157 2.42 0 1.332-.946 2.418-2.157 2.418z"/></svg>
+        </a>
+      </nav>
+    </header>
 
-      <h3>Modules</h3>
-      <p>Leveling, welcome messages, automations, and integrations can each be toggled per server. Nothing runs unless you enable it.</p>
+    <div class="docs-body">
 
-      <h2>Moderation</h2>
-      <ul>
-        <li><code>/ban</code>, <code>/kick</code>, <code>/timeout</code> — standard actions with optional reasons and DMs.</li>
-        <li><code>/warn</code> — records warnings against a member so patterns are visible across your mod team.</li>
-        <li><code>/purge</code> — bulk delete up to 100 messages, optionally filtered by member or bot.</li>
-      </ul>
-      <p>Every action is written to the case log with the moderator, target, and reason attached.</p>
+      <article class="docs-content prose" id="main">
+        <span class="eyebrow reveal">overview</span>
+        <h1 class="reveal" style="--d:.06s">Getting started with Hollow</h1>
+        <p class="docs-lede reveal" style="--d:.12s">Everything you need to get Hollow invited, configured, and running smoothly in your server.</p>
 
-      <h2>Leveling</h2>
-      <p>Members earn XP for participating. Use <code>/rank</code> to show progress, <code>/leaderboard</code> to see the server's top members, and <code>/setlevel</code> to adjust a member manually (requires <code>Manage Server</code>).</p>
+        <div class="docs-explore reveal" style="--d:.18s">
+          <a class="explore-card" href="#getting-started">
+            <h3>Install &amp; permissions</h3>
+            <p>Invite the bot, fix role hierarchy, first-run checklist.</p>
+          </a>
+          <a class="explore-card" href="commands.html">
+            <h3>Command reference</h3>
+            <p>Every slash command with arguments and permissions.</p>
+          </a>
+          <a class="explore-card" href="embeds.html">
+            <h3>Embed builder</h3>
+            <p>Design a message, preview it live, copy the JSON.</p>
+          </a>
+        </div>
 
-      <h2>Automations</h2>
-      <ul>
-        <li><code>/welcome</code> — greeting message with <code>{user}</code> and <code>{server}</code> placeholders.</li>
-        <li><code>/autorole</code> — assign a role the moment someone joins.</li>
-        <li><code>/reactionrole</code> — turn any message into a self-assign role menu.</li>
-        <li><code>/customcommand</code> — build your own trigger-and-response commands.</li>
-      </ul>
+        <div class="callout">
+          <strong>Default prefix.</strong> Hollow answers to slash commands everywhere, and the text prefix <code>,</code> in regular channels — run <code>,prefix set &lt;prefix&gt;</code> to change it per server. Pinging the bot works too.
+        </div>
 
-      <h2>Integrations</h2>
-      <p>Link the platforms your community already uses: Last.fm, Spotify, X, TikTok, GitHub, Valorant, Minecraft, and Roblox — all queried natively in chat. See the <a href="index.html#integrations">integration showcase</a> for what each one can do.</p>
+        <h2 id="getting-started">Getting started</h2>
+        <ol class="step-list">
+          <li><strong>Invite Hollow.</strong> Hit <a href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a>, pick your server, and approve the requested permissions.</li>
+          <li><strong>Grant permissions.</strong> Make sure Hollow's role sits <em>above</em> the roles it manages, with <code>Manage Messages</code>, <code>Moderate Members</code> and <code>Manage Roles</code> enabled for full functionality.</li>
+          <li><strong>Configure your modules.</strong> Set a welcome channel, enable auto-role, and drop reaction roles wherever members self-assign.</li>
+          <li><strong>Explore commands.</strong> Browse the full list on the <a href="commands.html">commands page</a> — every entry shows its arguments and required permissions.</li>
+        </ol>
 
-      <h2>Getting help</h2>
-      <p>Join the <a href="https://discord.gg/mScRXVGQ8U">support server</a> for setup help, bug reports, and release notes. For account or data requests, check the <a href="privacy.html">privacy policy</a>.</p>
+        <div class="callout">
+          Something not responding? Join the <a href="https://discord.gg/mScRXVGQ8U">support server</a> and open a ticket — most setup issues come from role hierarchy.
+        </div>
+
+        <h2 id="concepts">Core concepts</h2>
+        <h3>Commands</h3>
+        <p>Every Hollow feature is exposed as a slash command. Type <code>/</code> in Discord to see the live list, including inline argument hints. The <a href="commands.html">commands page</a> mirrors this data from Hollow's public API, and the text prefix works as a fallback wherever slash commands do.</p>
+
+        <h3>Permissions</h3>
+        <p>Moderation commands check Discord's native permissions first, then Hollow's own case log. Members with <code>Administrator</code> bypass all checks; everyone else needs the permission listed on the command card.</p>
+
+        <h3>Modules</h3>
+        <p>Leveling, welcome messages, automations, and integrations can each be toggled per server. Nothing runs unless you enable it.</p>
+
+        <h2 id="moderation">Moderation</h2>
+        <ul>
+          <li><code>/ban</code>, <code>/kick</code>, <code>/timeout</code> — standard actions with optional reasons and DMs.</li>
+          <li><code>/warn</code> — records warnings against a member so patterns are visible across your mod team.</li>
+          <li><code>/purge</code> — bulk delete up to 100 messages, optionally filtered by member or bot.</li>
+        </ul>
+        <p>Every action is written to the case log with the moderator, target, and reason attached.</p>
+
+        <h2 id="leveling">Leveling</h2>
+        <p>Members earn XP for participating. Use <code>/rank</code> to show progress, <code>/leaderboard</code> to see the server's top members, and <code>/setlevel</code> to adjust a member manually (requires <code>Manage Server</code>).</p>
+
+        <h2 id="automations">Automations</h2>
+        <ul>
+          <li><code>/welcome</code> — greeting message with <code>{user}</code> and <code>{server}</code> placeholders.</li>
+          <li><code>/autorole</code> — assign a role the moment someone joins.</li>
+          <li><code>/reactionrole</code> — turn any message into a self-assign role menu.</li>
+          <li><code>/customcommand</code> — build your own trigger-and-response commands.</li>
+        </ul>
+
+        <h2 id="integrations">Integrations</h2>
+        <p>Link the platforms your community already uses — all queried natively in chat, no dashboards to babysit:</p>
+        <div class="docs-int-chips">
+          <span class="int-chip"><img src="https://cdn.simpleicons.org/spotify/1db954" alt="Spotify logo" width="15" height="15" loading="lazy"> Spotify</span>
+          <span class="int-chip"><img src="https://cdn.simpleicons.org/soundcloud/ff5500" alt="SoundCloud logo" width="15" height="15" loading="lazy"> SoundCloud</span>
+          <span class="int-chip"><img src="https://cdn.simpleicons.org/youtube/ff0000" alt="YouTube logo" width="15" height="15" loading="lazy"> YouTube</span>
+          <span class="int-chip"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub logo" width="15" height="15" loading="lazy"> GitHub</span>
+          <span class="int-chip"><img src="https://cdn.simpleicons.org/discord/5865f2" alt="Discord logo" width="15" height="15" loading="lazy"> Discord</span>
+        </div>
+        <p>See the <a href="index.html#integrations">integration showcase</a> for what each one can do.</p>
+
+        <h2 id="help">Getting help</h2>
+        <p>Join the <a href="https://discord.gg/mScRXVGQ8U">support server</a> for setup help, bug reports, and release notes. Source, issues, and releases live on <a href="https://github.com/hollow-hq/hollow">GitHub</a>. For account or data requests, check the <a href="privacy.html">privacy policy</a>.</p>
+
+        <div class="docs-next">
+          <a class="link-arrow" href="embeds.html">
+            Next: Embed Builder
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <aside class="docs-toc">
+        <h4>On this page</h4>
+        <nav id="docsToc" aria-label="On this page">
+          <a href="#getting-started">Getting started</a>
+          <a href="#concepts">Core concepts</a>
+          <a href="#moderation">Moderation</a>
+          <a href="#leveling">Leveling</a>
+          <a href="#automations">Automations</a>
+          <a href="#integrations">Integrations</a>
+          <a href="#help">Getting help</a>
+        </nav>
+      </aside>
 
     </div>
   </div>
+</div>
 
-</main>
+<div class="docs-backdrop" id="docsBackdrop" aria-hidden="true"></div>
 
 <footer>
   <div class="container">
@@ -137,6 +219,7 @@
         <ul>
           <li><a href="index.html#features">Features</a></li>
           <li><a href="commands.html">Commands</a></li>
+          <li><a href="embeds.html">Embeds</a></li>
           <li><a href="index.html#integrations">Integrations</a></li>
           <li><a href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a></li>
         </ul>
@@ -186,5 +269,7 @@
 </footer>
 
 <script src="main.js" defer></script>
+<script src="docs.js" defer></script>
+
 </body>
 </html>

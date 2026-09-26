@@ -1,15 +1,9 @@
-/* ================================================================
-   Hollow — command browser
-   Loads the command list (live /commands API, falling back to the
-   static commands.json), then renders the search field, category
-   pills, table rows, copy buttons and detail modal.
-   Works on both index.html and commands.html.
-   ================================================================ */
+
 (function () {
   'use strict';
 
   var body = document.getElementById('commandBody');
-  if (!body) return; // page without a command table
+  if (!body) return;
 
   var table = document.getElementById('commandTable');
   var pillRow = document.getElementById('pillRow');
@@ -25,10 +19,9 @@
   var allCommands = [];
   var activeCategory = 'all';
   var searchTerm = '';
-  var sortMode = 'az'; // az (default) | za | category
+  var sortMode = 'az';
   var lastFocusedRow = null;
 
-  /* ---------------- helpers ---------------- */
   function escapeHtml(value) {
     var div = document.createElement('div');
     div.textContent = value == null ? '' : String(value);
@@ -40,7 +33,6 @@
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
-  /* ---------------- data loading ---------------- */
   function fetchWithTimeout(url, ms) {
     var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = controller ? setTimeout(function () { controller.abort(); }, ms) : null;
@@ -71,8 +63,7 @@
   }
 
   function loadCommands() {
-    // Live API first (works once deployed on Vercel), static JSON as fallback
-    // so the page still renders when opened without the serverless function.
+
     return fetchWithTimeout('/commands', 3000)
       .catch(function () { return fetch('commands.json').then(function (r) { return r.json(); }); })
       .then(function (data) { allCommands = normalise(data); })
@@ -83,7 +74,6 @@
       });
   }
 
-  /* ---------------- category pills ---------------- */
   function buildPills() {
     if (!pillRow) return;
     var categories = [];
@@ -111,7 +101,6 @@
     });
   }
 
-  /* ---------------- filtering + sorting ---------------- */
   function filteredCommands() {
     var term = searchTerm.trim().toLowerCase();
     var list = allCommands
@@ -130,7 +119,7 @@
         if (a.category !== b.category) return a.category.localeCompare(b.category);
         return a.name.localeCompare(b.name);
       });
-    } else { // 'az'
+    } else {
       list.sort(function (a, b) { return a.name.localeCompare(b.name); });
     }
     return list;
@@ -143,7 +132,6 @@
     });
   }
 
-  /* ---------------- table rendering ---------------- */
   function render() {
     var matches = filteredCommands();
     var visible = limit ? matches.slice(0, limit) : matches;
@@ -206,7 +194,6 @@
     });
   }
 
-  /* ---------------- copy to clipboard ---------------- */
   function copyCommand(btn) {
     var text = '/' + btn.dataset.copy;
     var label = btn.querySelector('.copy-label');
@@ -235,11 +222,10 @@
     area.style.opacity = '0';
     document.body.appendChild(area);
     area.select();
-    try { document.execCommand('copy'); done(); } catch (err) { /* clipboard unavailable */ }
+    try { document.execCommand('copy'); done(); } catch (err) {  }
     document.body.removeChild(area);
   }
 
-  /* ---------------- detail modal ---------------- */
   function openModal(cmd, row) {
     if (!modalOverlay || !modalBody || !cmd) return;
     lastFocusedRow = row || null;
@@ -299,7 +285,6 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  /* ---------------- search ---------------- */
   if (searchInput) {
     searchInput.addEventListener('input', function () {
       searchTerm = searchInput.value;

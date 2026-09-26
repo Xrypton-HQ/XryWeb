@@ -295,17 +295,6 @@
       "permissions": []
     },
     {
-      "name": "lastfm",
-      "usage_count": 0,
-      "category": "integrations",
-      "description": "Shows a member's Last.fm profile, or what they're listening to right now.",
-      "arguments": [
-        { "name": "user", "description": "The Discord member whose account to look up. Defaults to yourself.", "required": false },
-        { "name": "period", "description": "Time range for top stats: week, month, year, or all.", "required": false }
-      ],
-      "permissions": []
-    },
-    {
       "name": "spotify",
       "usage_count": 0,
       "category": "integrations",
@@ -327,44 +316,22 @@
       "permissions": []
     },
     {
-      "name": "valorant",
+      "name": "youtube",
       "usage_count": 0,
       "category": "integrations",
-      "description": "Shows a Valorant account's rank, most-played agents, and recent matches.",
+      "description": "Shows a YouTube video or channel with views, likes, and upload date.",
       "arguments": [
-        { "name": "name", "description": "The Riot account name.", "required": true },
-        { "name": "region", "description": "Your region: na, eu, ap, kr, or latam.", "required": true }
+        { "name": "query", "description": "A video URL, channel handle, or search term.", "required": true }
       ],
       "permissions": []
     },
     {
-      "name": "minecraft",
+      "name": "soundcloud",
       "usage_count": 0,
       "category": "integrations",
-      "description": "Shows a player's skin or a Java server's live status and player count.",
+      "description": "Looks up a track or profile on SoundCloud and posts a playable link.",
       "arguments": [
-        { "name": "target", "description": "A player username or a server address, e.g. play.example.com.", "required": true }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "tiktok",
-      "usage_count": 0,
-      "category": "integrations",
-      "description": "Looks up a TikTok profile and pulls their latest posts into chat.",
-      "arguments": [
-        { "name": "username", "description": "The TikTok handle, without the @.", "required": true }
-      ],
-      "permissions": []
-    },
-    {
-      "name": "x",
-      "usage_count": 0,
-      "category": "integrations",
-      "description": "Shows an X profile with their recent posts, polls and media.",
-      "arguments": [
-        { "name": "username", "description": "The X handle, without the @.", "required": true },
-        { "name": "count", "description": "How many recent posts to show (1-10). Defaults to 5.", "required": false }
+        { "name": "query", "description": "A track URL, artist name, or search term.", "required": true }
       ],
       "permissions": []
     }

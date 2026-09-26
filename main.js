@@ -1,14 +1,9 @@
-/* ================================================================
-   Hollow — shared page behaviour
-   nav drawer, scroll state, reveal-on-scroll, stat counters,
-   marquee loops, starfield, image fallbacks
-   ================================================================ */
+
 (function () {
   'use strict';
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------------- mobile nav ---------------- */
   var nav = document.getElementById('nav');
   var navToggle = document.getElementById('navToggle');
   var navLinks = document.getElementById('navLinks');
@@ -35,14 +30,12 @@
     if (e.key === 'Escape') setMenu(false);
   });
 
-  /* ---------------- scrolled nav state ---------------- */
   function onScroll() {
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 12);
   }
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  /* ---------------- active nav link ---------------- */
   var here = location.pathname.split('/').pop() || 'index.html';
   if (navLinks) {
     navLinks.querySelectorAll('a[href]').forEach(function (a) {
@@ -51,7 +44,6 @@
     });
   }
 
-  /* ---------------- reveal on scroll ---------------- */
   var revealEls = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window) || reduceMotion) {
     revealEls.forEach(function (el) { el.classList.add('in'); });
@@ -67,7 +59,6 @@
     revealEls.forEach(function (el) { revealObserver.observe(el); });
   }
 
-  /* ---------------- stat counters ---------------- */
   var counters = document.querySelectorAll('[data-count]');
   function animateCount(el) {
     var target = parseFloat(el.getAttribute('data-count'));
@@ -95,10 +86,6 @@
     counters.forEach(function (el) { countObserver.observe(el); });
   }
 
-  /* ---------------- marquees: duplicate content for a seamless loop ----
-     Rows carry data-marquee; the CSS animates them (-50% for the normal
-     direction, reversed for .logo-row.reverse). Cloning every original
-     child makes translateX(-50%) land exactly on the loop point. */
   document.querySelectorAll('[data-marquee]').forEach(function (track) {
     Array.prototype.slice.call(track.children).forEach(function (node) {
       var clone = node.cloneNode(true);
@@ -107,7 +94,6 @@
     });
   });
 
-  /* ---------------- hero particles ---------------- */
   var canvas = document.getElementById('particles');
   if (canvas && canvas.getContext) {
     var ctx = canvas.getContext('2d');
@@ -124,7 +110,6 @@
       buildDots();
     }
 
-    /* quiet starfield — small dim dots, no glow blur (cheap + subtle) */
     function buildDots() {
       var count = Math.min(46, Math.round(width / 34));
       dots = [];
@@ -182,7 +167,6 @@
     }
   }
 
-  /* ---------------- graceful fallback for remote logos ---------------- */
   document.querySelectorAll('.int-icon img, .social-btn img').forEach(function (img) {
     function fallback() {
       if (img.dataset.failed) return;

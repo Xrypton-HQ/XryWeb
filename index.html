@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hollow — The All-in-One Discord Bot for Your Community</title>
-<meta name="description" content="Hollow is the all-in-one Discord bot for your community: moderation, automation, leveling, fun commands, and integrations with Spotify, GitHub, Valorant and more.">
+<meta name="description" content="Hollow is the all-in-one Discord bot for your community: moderation, automation, leveling, fun commands, and integrations with Spotify, YouTube, SoundCloud, GitHub, and Discord.">
 <meta name="theme-color" content="#0a0612">
 <meta property="og:title" content="Hollow — The All-in-One Discord Bot">
 <meta property="og:description" content="Moderation, automation, leveling, and fun — one bot for your server.">
@@ -24,7 +24,6 @@
 <div class="bg-glow" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
 
-<!-- ======================= capsule navbar ======================= -->
 <header class="nav" id="nav">
   <div class="nav-capsule">
     <a class="brand" href="index.html" aria-label="Hollow home">
@@ -36,12 +35,16 @@
       <a href="#features">Features</a>
       <a href="commands.html">Commands</a>
       <a href="docs.html">Documentation</a>
+      <a href="embeds.html">Embeds</a>
     </nav>
 
     <div class="nav-actions">
       <a class="btn btn-primary btn-sm" href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a>
       <a class="icon-btn" href="https://discord.gg/mScRXVGQ8U" aria-label="Join the Hollow Discord">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.028C.533 9.046-.32 13.58.099 18.058a.082.082 0 00.031.056 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.042-.106 13.11 13.11 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.029zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419s.956-2.419 2.157-2.419c1.211 0 2.176 1.095 2.157 2.42 0 1.332-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.086-2.157-2.419s.955-2.419 2.157-2.419c1.21 0 2.176 1.095 2.157 2.42 0 1.332-.946 2.418-2.157 2.418z"/></svg>
+      </a>
+      <a class="icon-btn" href="https://github.com/hollow-hq/hollow" aria-label="Hollow on GitHub">
+        <img src="https://cdn.simpleicons.org/github/ffffff" alt="" width="17" height="17">
       </a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -54,7 +57,6 @@
 
 <main id="main">
 
-  <!-- ============================ hero ============================ -->
   <section class="hero">
     <canvas id="particles" aria-hidden="true"></canvas>
     <div class="container">
@@ -80,7 +82,6 @@
     </div>
   </section>
 
-  <!-- ========================= trusted by ========================= -->
   <section class="servers" aria-label="Communities using Hollow">
     <div class="marquee">
       <div class="marquee-track" data-marquee>
@@ -98,10 +99,8 @@
     </div>
   </section>
 
-  <!-- ========================== the wave ========================== -->
   <div class="wave-band" aria-hidden="true"></div>
 
-  <!-- ======================== integrations ======================== -->
   <section class="section" id="integrations">
     <div class="container">
       <div class="section-head reveal">
@@ -113,57 +112,36 @@
     <div class="logo-rows">
       <div class="logo-row">
         <div class="logo-track" data-marquee>
-          <article class="int-card" style="--brand:#d51007">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/lastdotfm/d51007" alt="Last.fm logo" width="21" height="21" loading="lazy"></span><h3>Last.fm</h3></div>
-            <p><span class="kw">Scrobble history</span>, now-playing cards, and listening leaderboards in chat.</p>
-          </article>
           <article class="int-card" style="--brand:#1db954">
             <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/spotify/1db954" alt="Spotify logo" width="21" height="21" loading="lazy"></span><h3>Spotify</h3></div>
             <p>Search <span class="kw">tracks, artists &amp; albums</span> — with previews right in Discord.</p>
           </article>
-          <article class="int-card" style="--brand:#ffffff">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/x/ffffff" alt="X logo" width="21" height="21" loading="lazy"></span><h3>X</h3></div>
-            <p>Look up <span class="kw">profiles, posts &amp; polls</span> without leaving the channel.</p>
-          </article>
-          <article class="int-card" style="--brand:#fe2c55">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/tiktok/fe2c55" alt="TikTok logo" width="21" height="21" loading="lazy"></span><h3>TikTok</h3></div>
-            <p>Pull <span class="kw">profiles, photos &amp; videos</span> straight into the conversation.</p>
-          </article>
-          <article class="int-card" style="--brand:#ffffff">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub logo" width="21" height="21" loading="lazy"></span><h3>GitHub</h3></div>
-            <p><span class="kw">Repos, commits &amp; releases</span> on demand for any org or user.</p>
+          <article class="int-card" style="--brand:#ff5500">
+            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/soundcloud/ff5500" alt="SoundCloud logo" width="21" height="21" loading="lazy"></span><h3>SoundCloud</h3></div>
+            <p>Search <span class="kw">tracks, artists &amp; sets</span> and post playable links in chat.</p>
           </article>
         </div>
       </div>
 
       <div class="logo-row reverse">
         <div class="logo-track" data-marquee>
-          <article class="int-card" style="--brand:#ff4655">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/valorant/ff4655" alt="Valorant logo" width="21" height="21" loading="lazy"></span><h3>Valorant</h3></div>
-            <p>Ranks, <span class="kw">agents, skins &amp; maps</span> for any account region.</p>
+          <article class="int-card" style="--brand:#5865f2">
+            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/discord/5865f2" alt="Discord logo" width="21" height="21" loading="lazy"></span><h3>Discord</h3></div>
+            <p><span class="kw">Moderation, logging &amp; role menus</span> post straight into your channels.</p>
           </article>
-          <article class="int-card" style="--brand:#62b47a">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/minecraft/62b47a" alt="Minecraft logo" width="21" height="21" loading="lazy"></span><h3>Minecraft</h3></div>
-            <p><span class="kw">Player skins</span> and live Java server status in a single command.</p>
-          </article>
-          <article class="int-card" style="--brand:#e2231a">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/roblox/e2231a" alt="Roblox logo" width="21" height="21" loading="lazy"></span><h3>Roblox</h3></div>
-            <p>Look up <span class="kw">profiles, groups &amp; games</span> plus limited items.</p>
+          <article class="int-card" style="--brand:#ffffff">
+            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub logo" width="21" height="21" loading="lazy"></span><h3>GitHub</h3></div>
+            <p><span class="kw">Repos, commits &amp; releases</span> on demand for any org or user.</p>
           </article>
           <article class="int-card" style="--brand:#ff0000">
             <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/youtube/ff0000" alt="YouTube logo" width="21" height="21" loading="lazy"></span><h3>YouTube</h3></div>
             <p><span class="kw">Channels, videos &amp; view counts</span> without opening a tab.</p>
-          </article>
-          <article class="int-card" style="--brand:#9146ff">
-            <div class="int-head"><span class="int-icon"><img src="https://cdn.simpleicons.org/twitch/9146ff" alt="Twitch logo" width="21" height="21" loading="lazy"></span><h3>Twitch</h3></div>
-            <p><span class="kw">Live streams, followers &amp; clips</span> posted on demand.</p>
           </article>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========================== features ========================== -->
   <section class="section bordered" id="features">
     <div class="container">
       <div class="section-head reveal">
@@ -210,7 +188,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"/></svg>
           </div>
           <h3>Integrations</h3>
-          <p>Spotify, GitHub, Valorant, Minecraft and more — looked up natively, without leaving Discord.</p>
+          <p>Spotify, SoundCloud, YouTube and GitHub — looked up natively, without leaving Discord.</p>
         </article>
 
         <article class="feature reveal" style="--d:.1s">
@@ -255,7 +233,6 @@
     </div>
   </section>
 
-  <!-- ========================= showcase band ========================= -->
   <section class="section bordered">
     <div class="container">
       <div class="showcase-grid">
@@ -308,7 +285,6 @@
     </div>
   </section>
 
-  <!-- ========================= testimonials ========================= -->
   <section class="section bordered">
     <div class="container">
       <div class="section-head reveal">
@@ -356,7 +332,6 @@
     </div>
   </section>
 
-  <!-- ========================= final cta ========================= -->
   <section class="section bordered">
     <div class="container">
       <div class="cta-panel reveal">
@@ -375,7 +350,6 @@
 
 </main>
 
-<!-- ============================ footer ============================ -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -400,6 +374,7 @@
         <ul>
           <li><a href="#features">Features</a></li>
           <li><a href="commands.html">Commands</a></li>
+          <li><a href="embeds.html">Embeds</a></li>
           <li><a href="#integrations">Integrations</a></li>
           <li><a href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a></li>
         </ul>
