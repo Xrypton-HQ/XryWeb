@@ -57,9 +57,13 @@
         <a href="index.html#integrations">Showcase</a>
       </div>
       <div class="docs-group">
+        <h4>Developers</h4>
+        <a href="#api">Public API</a>
+        <a href="https://github.com/hollow-hq/hollow">GitHub</a>
+      </div>
+      <div class="docs-group">
         <h4>Getting Help</h4>
         <a href="#help">Support Server</a>
-        <a href="https://github.com/hollow-hq/hollow">GitHub</a>
       </div>
     </nav>
     <p class="docs-empty" id="docsEmpty" hidden>No pages match that search.</p>
@@ -144,14 +148,14 @@
         <p>Every action is written to the case log with the moderator, target, and reason attached.</p>
 
         <h2 id="leveling">Leveling</h2>
-        <p>Members earn XP for participating. Use <code>/rank</code> to show progress, <code>/leaderboard</code> to see the server's top members, and <code>/setlevel</code> to adjust a member manually (requires <code>Manage Server</code>).</p>
+        <p>Members earn XP for participating. Use <code>/level rank</code> to show progress, <code>/level leaderboard</code> to see the server's top members, and <code>/level add</code> to adjust a member manually (requires <code>Manage Server</code>).</p>
 
         <h2 id="automations">Automations</h2>
         <ul>
           <li><code>/welcome</code> — greeting message with <code>{user}</code> and <code>{server}</code> placeholders.</li>
           <li><code>/autorole</code> — assign a role the moment someone joins.</li>
-          <li><code>/reactionrole</code> — turn any message into a self-assign role menu.</li>
-          <li><code>/customcommand</code> — build your own trigger-and-response commands.</li>
+          <li><code>/buttonrole</code> — turn any message into a self-assign role menu.</li>
+          <li><code>/trigger</code> — build your own trigger-and-response commands.</li>
         </ul>
 
         <h2 id="integrations">Integrations</h2>
@@ -164,6 +168,17 @@
           <span class="int-chip"><img src="https://cdn.simpleicons.org/discord/5865f2" alt="Discord logo" width="15" height="15" loading="lazy"> Discord</span>
         </div>
         <p>See the <a href="index.html#integrations">integration showcase</a> for what each one can do.</p>
+
+        <h2 id="api">Public API</h2>
+        <p>Three endpoints power the site — anyone can read them, no key required:</p>
+        <ul>
+          <li><code>GET /commands</code> — every command as JSON, filterable with <code>?category=</code> or <code>?name=</code>. This is what the <a href="commands.html">commands page</a> renders.</li>
+          <li><code>GET /info</code> — the bot's total guild and user counts, used by the counters on the homepage.</li>
+          <li><code>GET /guilds</code> — the communities list behind the server marquee: name, member count, optional icon URL.</li>
+        </ul>
+        <div class="callout">
+          <strong>Bot sync.</strong> Hollow itself <code>POST</code>s fresh data to these endpoints with an <code>Authorization: Bearer</code> key, so the site updates without a redeploy. Until storage is configured the API serves the bundled defaults.
+        </div>
 
         <h2 id="help">Getting help</h2>
         <p>Join the <a href="https://discord.gg/mScRXVGQ8U">support server</a> for setup help, bug reports, and release notes. Source, issues, and releases live on <a href="https://github.com/hollow-hq/hollow">GitHub</a>. For account or data requests, check the <a href="privacy.html">privacy policy</a>.</p>
@@ -185,6 +200,7 @@
           <a href="#leveling">Leveling</a>
           <a href="#automations">Automations</a>
           <a href="#integrations">Integrations</a>
+          <a href="#api">Public API</a>
           <a href="#help">Getting help</a>
         </nav>
       </aside>

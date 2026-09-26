@@ -1,34 +1,35 @@
-// api/commands.js
-// Deployed by Vercel at /api/commands, and rewritten to /commands by vercel.json.
-//
-// GET  /commands              -> list every command (optionally filter with ?category= or ?name=)
-// POST /commands               -> add a new command (see body shape below)
-// PUT  /commands               -> replace full command list or update usage counts
-//                               body: { commands?: [...], usage?: [{ name, count }] }
-//
-// NOTE ON PERSISTENCE:
-// Vercel serverless functions run in stateless, ephemeral containers, and the
-// deployed filesystem is read-only. Runtime state is kept in memory and WILL
-// be lost on the next cold start or redeploy. For permanent storage, swap
-// `runtimeCommands` out for a real store (Vercel KV, Postgres, MongoDB, etc.).
+const { read, write, authorized } = require('../../lib/store');
+const bundled = require('../../commands.json');
 
-const commandsData = require('../commands.json');
-
-let runtimeCommands = [...commandsData.commands];
-
-function mergeCommand(target, source) {
-  target.name = source.name || target.name;
-  target.usage_count = source.usage_count !== undefined ? source.usage_count : target.usage_count;
-  target.category = source.category !== undefined ? source.category : target.category;
-  target.description = source.description !== undefined ? source.description : target.description;
-  target.arguments = Array.isArray(source.arguments) ? source.arguments : target.arguments;
-  target.permissions = Array.isArray(source.permissions) ? source.permissions : target.permissions;
+function cors(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Api-Key');
 }
 
-module.exports = (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+function normalize(cmd) {
+  if (!cmd || typeof cmd.name !== 'string' || !cmd.name.trim()) return null;
+  if (typeof cmd.description !== 'string' || !cmd.description.trim()) return null;
+  return {
+    name: cmd.name.trim().toLowerCase(),
+    usage_count: Number.isFinite(cmd.usage_count) ? cmd.usage_count : 0,
+    category: typeof cmd.category === 'string' && cmd.category.trim()
+      ? cmd.category.trim().toLowerCase()
+      : 'uncategorized',
+    description: cmd.description.trim(),
+    arguments: Array.isArray(cmd.arguments)
+      ? cmd.arguments.map((a) => ({
+          name: String(a.name || ''),
+          description: String(a.description || ''),
+          required: Boolean(a.required)
+        }))
+      : [],
+    permissions: Array.isArray(cmd.permissions) ? cmd.permissions.map(String) : []
+  };
+}
+
+module.exports = async (req, res) => {
+  cors(res);
 
   if (req.method === 'OPTIONS') {
     res.status(204).end();
@@ -36,8 +37,9 @@ module.exports = (req, res) => {
   }
 
   if (req.method === 'GET') {
-    const { category, name } = req.query;
-    let results = runtimeCommands;
+    const list = await read('commands', bundled.commands);
+    const { category, name } = req.query || {};
+    let results = list;
 
     if (category) {
       results = results.filter(
@@ -55,107 +57,42 @@ module.exports = (req, res) => {
   }
 
   if (req.method === 'POST') {
-    const body = req.body || {};
-    const { name, description, category, arguments: args, permissions } = body;
-
-    if (!name || typeof name !== 'string') {
-      res.status(400).json({ error: '"name" is required and must be a string.' });
-      return;
-    }
-    if (!description || typeof description !== 'string') {
-      res.status(400).json({ error: '"description" is required and must be a string.' });
-      return;
-    }
-    if (args && !Array.isArray(args)) {
-      res.status(400).json({ error: '"arguments" must be an array of { name, description, required }.' });
-      return;
-    }
-    if (permissions && !Array.isArray(permissions)) {
-      res.status(400).json({ error: '"permissions" must be an array of permission name strings.' });
+    if (!authorized(req)) {
+      res.status(401).json({ error: 'Missing or invalid API key.' });
       return;
     }
 
-    const exists = runtimeCommands.some(
-      (c) => c.name.toLowerCase() === name.toLowerCase()
-    );
-    if (exists) {
-      res.status(409).json({ error: `A command named "${name}" already exists.` });
+    const body = req.body;
+    const raw = Array.isArray(body) ? body : body && body.commands;
+    if (!Array.isArray(raw) || raw.length === 0) {
+      res.status(400).json({ error: 'Send an array of commands, or { "commands": [...] }.' });
       return;
     }
 
-    const newCommand = {
-      name: name.toLowerCase(),
-      description,
-      category: category || 'uncategorized',
-      arguments: (args || []).map((a) => ({
-        name: a.name,
-        description: a.description || '',
-        required: Boolean(a.required),
-      })),
-      permissions: permissions || [],
-    };
+    const clean = [];
+    const seen = new Set();
+    for (let i = 0; i < raw.length; i += 1) {
+      const cmd = normalize(raw[i]);
+      if (!cmd) {
+        res.status(400).json({ error: `Command at index ${i} needs a name and description.` });
+        return;
+      }
+      if (seen.has(cmd.name)) continue;
+      seen.add(cmd.name);
+      clean.push(cmd);
+    }
 
-    runtimeCommands.push(newCommand);
+    try {
+      await write('commands', clean);
+    } catch (err) {
+      res.status(err.code === 'ENOSTORE' ? 503 : 502).json({ error: err.message });
+      return;
+    }
 
-    res.status(201).json({
-      message:
-        'Command added. This is held in memory for this server instance only — ' +
-        'it will not survive a cold start or redeploy. Connect a real database ' +
-        'to persist it permanently.',
-      command: newCommand,
-    });
+    res.status(200).json({ ok: true, count: clean.length });
     return;
   }
 
-  if (req.method === 'PUT') {
-    const body = req.body || {};
-    const { commands: incomingCommands, usage } = body;
-
-    if (Array.isArray(incomingCommands)) {
-      const index = new Map();
-      for (let i = 0; i < runtimeCommands.length; i += 1) {
-        index.set(runtimeCommands[i].name.toLowerCase(), i);
-      }
-
-      const updatedNames = [];
-      incomingCommands.forEach((cmd) => {
-        const key = String(cmd.name || '').toLowerCase();
-        const i = index.get(key);
-        if (i !== undefined) {
-          mergeCommand(runtimeCommands[i], cmd);
-          updatedNames.push(runtimeCommands[i].name);
-        }
-      });
-
-      res.status(200).json({ updated: updatedNames, mode: 'commands' });
-      return;
-    }
-
-    if (Array.isArray(usage)) {
-      const index = new Map();
-      for (let i = 0; i < runtimeCommands.length; i += 1) {
-        index.set(runtimeCommands[i].name.toLowerCase(), i);
-      }
-
-      const updated = [];
-      usage.forEach((entry) => {
-        const key = String(entry.name || '').toLowerCase();
-        const count = typeof entry.count === 'number' ? entry.count : 0;
-        const i = index.get(key);
-        if (i !== undefined) {
-          runtimeCommands[i].usage_count = count;
-          updated.push(runtimeCommands[i].name);
-        }
-      });
-
-      res.status(200).json({ updated, mode: 'usage' });
-      return;
-    }
-
-    res.status(400).json({ error: 'PUT body must include either "commands" or "usage".' });
-    return;
-  }
-
-  res.setHeader('Allow', 'GET, POST, PUT, OPTIONS');
-  res.status(405).json({ error: `Method ${req.method} not allowed.` });
+  res.setHeader('Allow', 'GET, POST, OPTIONS');
+  res.status(405).json({ error: `${req.method} not allowed.` });
 };
