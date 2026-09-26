@@ -36,6 +36,29 @@
       "permissions": ["Moderate Members"]
     },
     {
+      "name": "purge",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Bulk-deletes messages from the current channel, optionally filtered by member or bot.",
+      "arguments": [
+        { "name": "amount", "description": "How many messages to delete (1-100).", "required": true },
+        { "name": "user", "description": "Only delete messages from this member.", "required": false },
+        { "name": "bots_only", "description": "Only delete messages sent by bots.", "required": false }
+      ],
+      "permissions": ["Manage Messages"]
+    },
+    {
+      "name": "warn",
+      "usage_count": 0,
+      "category": "moderation",
+      "description": "Records a warning on a member's record, visible to moderators in the case log.",
+      "arguments": [
+        { "name": "user", "description": "The member to warn.", "required": true },
+        { "name": "reason", "description": "Reason for the warning.", "required": true }
+      ],
+      "permissions": ["Moderate Members"]
+    },
+    {
       "name": "rank",
       "usage_count": 0,
       "category": "leveling",
@@ -82,7 +105,7 @@
       "name": "remind",
       "usage_count": 0,
       "category": "utility",
-      "description": "Sets a personal reminder that hollow. will DM you when it's time.",
+      "description": "Sets a personal reminder that Hollow will DM you when it's time.",
       "arguments": [
         { "name": "time", "description": "When to be reminded (e.g. 20m, 3h, 2d).", "required": true },
         { "name": "message", "description": "What to be reminded about.", "required": true }
@@ -96,6 +119,28 @@
       "description": "Looks up account details for a member: join date, account age, and roles.",
       "arguments": [
         { "name": "user", "description": "The member to look up. Defaults to yourself.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "ai",
+      "usage_count": 0,
+      "category": "utility",
+      "description": "Chats with Hollow's built-in AI assistant, right inside Discord.",
+      "arguments": [
+        { "name": "prompt", "description": "Your question or instruction for the assistant.", "required": true },
+        { "name": "model", "description": "Which model to use. Defaults to the fastest one.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "translate",
+      "usage_count": 0,
+      "category": "utility",
+      "description": "Translates a message into another language and posts it in the channel.",
+      "arguments": [
+        { "name": "text", "description": "The text to translate.", "required": true },
+        { "name": "language", "description": "Target language code (e.g. es, de, ja).", "required": true }
       ],
       "permissions": []
     },
@@ -132,6 +177,196 @@
         { "name": "message", "description": "Custom message text. Supports {user} and {server} placeholders.", "required": false }
       ],
       "permissions": ["Manage Server"]
+    },
+    {
+      "name": "customcommand",
+      "usage_count": 0,
+      "category": "automation",
+      "description": "Creates your own command with a custom trigger and response.",
+      "arguments": [
+        { "name": "name", "description": "What members type to trigger the command.", "required": true },
+        { "name": "response", "description": "The reply Hollow sends. Supports variables like {user}.", "required": true },
+        { "name": "delete_trigger", "description": "Delete the member's message after responding.", "required": false }
+      ],
+      "permissions": ["Manage Server"]
+    },
+    {
+      "name": "8ball",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Asks the magic 8-ball a question and returns a yes, no, or maybe.",
+      "arguments": [
+        { "name": "question", "description": "The question to ask the 8-ball.", "required": true }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "coinflip",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Flips a coin and returns heads or tails.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "roll",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Rolls dice and returns the total, e.g. 2d20 for two twenty-sided dice.",
+      "arguments": [
+        { "name": "dice", "description": "Dice notation such as d20, 2d6, or 4d100. Defaults to d20.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "trivia",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Starts a timed trivia round in the current channel with points for the winner.",
+      "arguments": [
+        { "name": "category", "description": "Trivia category: general, gaming, music, or science.", "required": false },
+        { "name": "difficulty", "description": "Easy, medium, or hard. Defaults to medium.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "meme",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Posts a random meme from a curated, SFW collection.",
+      "arguments": [
+        { "name": "subreddit", "description": "Only pull memes from this community.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "ship",
+      "usage_count": 0,
+      "category": "fun",
+      "description": "Calculates a playful compatibility percentage between two members.",
+      "arguments": [
+        { "name": "user", "description": "The first member.", "required": true },
+        { "name": "user2", "description": "The second member.", "required": true }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "play",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Plays a song from YouTube or Spotify in your voice channel.",
+      "arguments": [
+        { "name": "query", "description": "A search term, or a direct YouTube/Spotify link.", "required": true }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "queue",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Shows the current play queue with durations and who requested each track.",
+      "arguments": [
+        { "name": "page", "description": "Which page of the queue to view.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "skip",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Votes to skip the current track, or skips instantly with the DJ permission.",
+      "arguments": [],
+      "permissions": ["Move Members"]
+    },
+    {
+      "name": "stop",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Clears the queue and stops playback completely.",
+      "arguments": [],
+      "permissions": ["Move Members"]
+    },
+    {
+      "name": "nowplaying",
+      "usage_count": 0,
+      "category": "music",
+      "description": "Shows the track currently playing, with a progress bar and requester.",
+      "arguments": [],
+      "permissions": []
+    },
+    {
+      "name": "lastfm",
+      "usage_count": 0,
+      "category": "integrations",
+      "description": "Shows a member's Last.fm profile, or what they're listening to right now.",
+      "arguments": [
+        { "name": "user", "description": "The Discord member whose account to look up. Defaults to yourself.", "required": false },
+        { "name": "period", "description": "Time range for top stats: week, month, year, or all.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "spotify",
+      "usage_count": 0,
+      "category": "integrations",
+      "description": "Looks up a track, artist, or album on Spotify with a playable preview.",
+      "arguments": [
+        { "name": "query", "description": "The track, artist, or album to search for.", "required": true },
+        { "name": "type", "description": "What to search for: track, artist, or album. Defaults to track.", "required": false }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "github",
+      "usage_count": 0,
+      "category": "integrations",
+      "description": "Shows a GitHub profile or repository, including stars and recent commits.",
+      "arguments": [
+        { "name": "target", "description": "A username or owner/repo pair, e.g. hollow-hq/XryWeb.", "required": true }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "valorant",
+      "usage_count": 0,
+      "category": "integrations",
+      "description": "Shows a Valorant account's rank, most-played agents, and recent matches.",
+      "arguments": [
+        { "name": "name", "description": "The Riot account name.", "required": true },
+        { "name": "region", "description": "Your region: na, eu, ap, kr, or latam.", "required": true }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "minecraft",
+      "usage_count": 0,
+      "category": "integrations",
+      "description": "Shows a player's skin or a Java server's live status and player count.",
+      "arguments": [
+        { "name": "target", "description": "A player username or a server address, e.g. play.example.com.", "required": true }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "tiktok",
+      "usage_count": 0,
+      "category": "integrations",
+      "description": "Looks up a TikTok profile and pulls their latest posts into chat.",
+      "arguments": [
+        { "name": "username", "description": "The TikTok handle, without the @.", "required": true }
+      ],
+      "permissions": []
+    },
+    {
+      "name": "x",
+      "usage_count": 0,
+      "category": "integrations",
+      "description": "Shows an X profile with their recent posts, polls and media.",
+      "arguments": [
+        { "name": "username", "description": "The X handle, without the @.", "required": true },
+        { "name": "count", "description": "How many recent posts to show (1-10). Defaults to 5.", "required": false }
+      ],
+      "permissions": []
     }
   ]
 }

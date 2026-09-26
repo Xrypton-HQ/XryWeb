@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Commands — Hollow</title>
-<meta name="description" content="Every Hollow command, with its category, description, arguments and required permissions. Search, filter, and copy instantly.">
+<title>Documentation — Hollow</title>
+<meta name="description" content="Get Hollow running in your Discord server: invite, permissions, leveling, automations, and integrations.">
 <meta name="theme-color" content="#0a0612">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -21,7 +21,6 @@
 <div class="bg-glow" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
 
-<!-- ======================= capsule navbar ======================= -->
 <header class="nav" id="nav">
   <div class="nav-capsule">
     <a class="brand" href="index.html" aria-label="Hollow home">
@@ -51,67 +50,69 @@
 
 <main id="main">
 
-  <!-- ======================= page header ======================= -->
   <section class="page-hero">
     <div class="container">
-      <h1 class="reveal"><span class="accent">Commands</span></h1>
-      <p class="reveal" style="--d:.06s">Every Hollow command, with the arguments and permissions each one needs. Search, sort, and copy — then click a row for the full breakdown.</p>
+      <span class="eyebrow reveal">docs / getting started</span>
+      <h1 class="reveal" style="--d:.06s"><span class="accent">Documentation</span></h1>
+      <p class="reveal" style="--d:.12s">Everything you need to get Hollow invited, configured, and running smoothly in your server.</p>
     </div>
   </section>
 
-  <!-- ======================= command browser ======================= -->
-  <section class="section" style="padding-top: clamp(24px, 3vw, 40px);">
-    <div class="container">
+  <div class="container">
+    <div class="prose reveal">
 
-      <div class="cmd-controls reveal">
-        <div class="search-field">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <label class="sr-only" for="commandSearch">Search commands</label>
-          <input id="commandSearch" type="search" placeholder="Search commands…" autocomplete="off">
-        </div>
+      <h2>Getting started</h2>
+      <ol class="step-list">
+        <li><strong>Invite Hollow.</strong> Hit <a href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">Add to Discord</a>, pick your server, and approve the requested permissions.</li>
+        <li><strong>Grant permissions.</strong> Make sure Hollow's role sits <em>above</em> the roles it manages, with <code>Manage Messages</code>, <code>Moderate Members</code> and <code>Manage Roles</code> enabled for full functionality.</li>
+        <li><strong>Configure your modules.</strong> Set a welcome channel, enable auto-role, and drop reaction roles wherever members self-assign.</li>
+        <li><strong>Explore commands.</strong> Browse the full list on the <a href="commands.html">commands page</a> — every entry shows its arguments and required permissions.</li>
+      </ol>
 
-        <div class="sort-select">
-          <label class="sr-only" for="sortSelect">Sort commands</label>
-          <select id="sortSelect">
-            <option value="az" selected>Name A–Z</option>
-            <option value="za">Name Z–A</option>
-            <option value="category">Category</option>
-          </select>
-        </div>
+      <div class="callout">
+        Something not responding? Join the <a href="https://discord.gg/mScRXVGQ8U">support server</a> and open a ticket — most setup issues come from role hierarchy.
       </div>
 
-      <div class="pill-row reveal" id="pillRow" style="--d:.06s"></div>
+      <h2>Core concepts</h2>
+      <h3>Commands</h3>
+      <p>Every Hollow feature is exposed as a slash command. Type <code>/</code> in Discord to see the live list, including inline argument hints. The <a href="commands.html">commands page</a> mirrors this data from Hollow's public API.</p>
 
-      <p class="result-meta" id="resultMeta" aria-live="polite"></p>
+      <h3>Permissions</h3>
+      <p>Moderation commands check Discord's native permissions first, then Hollow's own case log. Members with <code>Administrator</code> bypass all checks; everyone else needs the permission listed on the command card.</p>
 
-      <div class="table-wrap tall reveal" style="--d:.1s">
-        <table class="cmd-table" id="commandTable">
-          <thead>
-            <tr>
-              <th scope="col">Command</th>
-              <th scope="col">Category</th>
-              <th scope="col">Description</th>
-              <th scope="col" class="col-copy">Copy</th>
-            </tr>
-          </thead>
-          <tbody id="commandBody"></tbody>
-        </table>
-      </div>
+      <h3>Modules</h3>
+      <p>Leveling, welcome messages, automations, and integrations can each be toggled per server. Nothing runs unless you enable it.</p>
 
-      <div class="empty-state" id="emptyState">No commands match that search.</div>
+      <h2>Moderation</h2>
+      <ul>
+        <li><code>/ban</code>, <code>/kick</code>, <code>/timeout</code> — standard actions with optional reasons and DMs.</li>
+        <li><code>/warn</code> — records warnings against a member so patterns are visible across your mod team.</li>
+        <li><code>/purge</code> — bulk delete up to 100 messages, optionally filtered by member or bot.</li>
+      </ul>
+      <p>Every action is written to the case log with the moderator, target, and reason attached.</p>
 
-      <div class="table-foot">
-        <a class="link-arrow" href="https://discord.com/oauth2/authorize?client_id=1447869784937988201">
-          Add Hollow to your server
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
+      <h2>Leveling</h2>
+      <p>Members earn XP for participating. Use <code>/rank</code> to show progress, <code>/leaderboard</code> to see the server's top members, and <code>/setlevel</code> to adjust a member manually (requires <code>Manage Server</code>).</p>
+
+      <h2>Automations</h2>
+      <ul>
+        <li><code>/welcome</code> — greeting message with <code>{user}</code> and <code>{server}</code> placeholders.</li>
+        <li><code>/autorole</code> — assign a role the moment someone joins.</li>
+        <li><code>/reactionrole</code> — turn any message into a self-assign role menu.</li>
+        <li><code>/customcommand</code> — build your own trigger-and-response commands.</li>
+      </ul>
+
+      <h2>Integrations</h2>
+      <p>Link the platforms your community already uses: Last.fm, Spotify, X, TikTok, GitHub, Valorant, Minecraft, and Roblox — all queried natively in chat. See the <a href="index.html#integrations">integration showcase</a> for what each one can do.</p>
+
+      <h2>Getting help</h2>
+      <p>Join the <a href="https://discord.gg/mScRXVGQ8U">support server</a> for setup help, bug reports, and release notes. For account or data requests, check the <a href="privacy.html">privacy policy</a>.</p>
+
     </div>
-  </section>
+  </div>
 
 </main>
 
-<!-- ============================ footer ============================ -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -154,7 +155,6 @@
         <h4>Support</h4>
         <ul>
           <li><a href="https://discord.gg/mScRXVGQ8U">Support Server</a></li>
-          <!-- Replace with the real dashboard URL when available -->
           <li><a href="https://discord.gg/mScRXVGQ8U">Dashboard</a></li>
           <li><a href="https://github.com/hollow-hq/hollow">GitHub</a></li>
         </ul>
@@ -185,18 +185,6 @@
   </div>
 </footer>
 
-<!-- ====================== command detail modal ====================== -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" id="modalClose" aria-label="Close command details">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div id="modalBody"></div>
-  </div>
-</div>
-
 <script src="main.js" defer></script>
-<script src="commands.js" defer></script>
-
 </body>
 </html>
